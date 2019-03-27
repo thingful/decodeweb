@@ -8,12 +8,12 @@ SHELL := /bin/bash
 
 VERSION := $(shell git describe --tags --always --dirty)
 
-IMAGE := thingful/decode-demo
+IMAGE := thingful/decodeweb
 
 TAGGED_IMAGE := $(IMAGE):$(VERSION)
 LATEST_IMAGE := $(IMAGE):latest
 
-APP_NAME := decode-webapp
+APP_NAME := decodeweb
 
 .PHONY: version
 version: ## Display the current version

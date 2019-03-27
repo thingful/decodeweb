@@ -1,0 +1,36 @@
+FROM umbrellium/phoenix-builder:v0.1.0
+
+LABEL maintainer="sam@umbrellium.co.uk"
+
+RUN apk add --update --no-cache \
+  make \
+  bash \
+  build-base \
+  inotify-tools \
+  git \
+  curl
+
+ARG ADR_TOOLS_VERSION=3.0.0
+
+RUN curl --location -s -o /tmp/adr-tools-$ADR_TOOLS_VERSION.tar.gz \
+  https://github.com/npryce/adr-tools/archive/$ADR_TOOLS_VERSION.tar.gz \
+  && tar xz -C /usr/local/lib -f /tmp/adr-tools-$ADR_TOOLS_VERSION.tar.gz \
+  && ln -s /usr/local/lib/adr-tools-$ADR_TOOLS_VERSION /usr/local/lib/adr-tools \
+  && rm /tmp/adr-tools-$ADR_TOOLS_VERSION.tar.gz
+
+ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/lib/adr-tools/src
+
+RUN addgroup -g 1000 -S decode \
+  && adduser -u 1000 -S decode -G decode \
+  || adduser -u 1000 -S decode
+
+USER decode
+
+RUN mix local.hex --force \
+  && mix archive.install --force hex phx_new 1.4.2 \
+  && mix local.rebar --force
+
+ENV APP_HOME /app
+WORKDIR $APP_HOME
+
+CMD ["mix", "phx.server"]
