@@ -1,0 +1,15 @@
+version: '3'
+services:
+  app:
+    build:
+      context: ./app
+      dockerfile: .dockerfile.dev
+    network_mode: host
+    volumes:
+      - ./app:/app
+    ports:
+      - "4000:4000"
+    environment:
+      - POLICYSTORE_BASE_URL=https://policystore.decodeproject.eu
+      - ENCODER_BASE_URL=https://encoder.decodeproject.eu
+      - DATASTORE_BASE_URL=https://datastore.decodeproject.eu
