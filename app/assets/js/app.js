@@ -1,7 +1,9 @@
 // We need to import the CSS so that webpack will load it.
 // The MiniCssExtractPlugin is used to separate it out into
 // its own CSS file.
-import css from "../css/app.css"
+
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 // webpack automatically bundles all modules in your
 // entry points. Those entry points can be configured
@@ -9,9 +11,20 @@ import css from "../css/app.css"
 //
 // Import dependencies
 //
-import "phoenix_html"
+import 'phoenix_html';
+import Vue from 'vue';
+import BootstrapVue from 'bootstrap-vue';
+
+Vue.use(BootstrapVue);
 
 // Import local files
 //
 // Local files can be imported directly using relative paths, for example:
 // import socket from "./socket"
+
+import App from './App.vue';
+
+new Vue({
+  el: '#app',
+  render: h => h(App)
+});
