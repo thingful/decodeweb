@@ -1,9 +1,5 @@
 
 export default new class zenroom {
-  constructor() {
-    console.log('zenroom module constructed');
-  }
-
   exec(script, opts) {
     let defaults = {
       verbosity: 1
