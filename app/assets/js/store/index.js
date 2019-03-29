@@ -23,7 +23,7 @@ const store = new Vuex.Store({
     },
     [LOGOUT](state) {
       // remove pin from localstorage and state
-      localStorage.removeItem(state.pin);
+      localStorage.removeItem('pin');
       delete state.pin;
 
       // clear configuration
@@ -31,11 +31,9 @@ const store = new Vuex.Store({
     },
     [INITIALIZE_CONFIG](state) {
       if (localStorage.getItem('pin')) {
-        console.log('FOUND PIN IN LOCALSTORAGE');
-        let pin = localStorage.getItem('pin');
-        if (localStorage.getItem(pin)) {
-          console.log('FONUD CONFIG IN LOCALSTORAGE');
-          Vue.set(state, 'configuration', JSON.parse(localStorage.getItem(pin)));
+        state.pin = localStorage.getItem('pin');
+        if (localStorage.getItem(state.pin)) {
+          Vue.set(state, 'configuration', JSON.parse(localStorage.getItem(state.pin)));
         }
       }
     }
