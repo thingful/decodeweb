@@ -7,8 +7,29 @@
     <title>Decode App</title>
   </head>
   <body>
-    <div id="app"></div>
+    <%= render @view_module, @view_template, assigns %>
 
+    <script async type="text/javascript" src="index.js"></script>
+    <script type="text/javascript">
+      let outputBuffer = '';
+
+      var Module = {
+        preRun: [],
+        postRun: [],
+        print: (() => {
+          return function(text) {
+            if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
+            outputBuffer += text;
+          }
+        })(),
+        printErr: (text) => {
+          console.error(text);
+        },
+        exec_ok: () => {},
+        exec_error: () => {}
+      };
+
+    </script>
     <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </body>
 </html>
