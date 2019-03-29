@@ -8,7 +8,7 @@
 
     <div class="row">
       <div class="col-sm">
-        <b-button block variant="primary">Add Device</b-button>
+        <b-button block variant="primary" to="newDevice">Add Device</b-button>
       </div>
     </div>
 

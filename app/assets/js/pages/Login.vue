@@ -48,7 +48,6 @@ export default {
     onSubmit(evt) {
       evt.preventDefault();
       let resp = zenroom.exec('print("hello world")');
-      console.log(resp);
 
       this.$store.commit(LOGIN, { pin: this.pin });
       this.$router.replace({ name: "home" });
