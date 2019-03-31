@@ -2,14 +2,14 @@
   <div>
     <div class="row">
       <div class="col-sm">
-        <p>This is your personal data stored in the temporary DECODE app.</p>
+        <p>{{ $t('message.homeText') }}</p>
       </div>
     </div>
 
     <div class="row">
       <div class="col-sm">
-        <b-button block variant="primary" to="devices">Manage Devices</b-button>
-        <b-button block variant="danger" @click="logout">Logout</b-button>
+        <b-button block variant="primary" to="devices">{{ $t('message.manageDevices') }}</b-button>
+        <b-button block variant="danger" @click="logout">{{ $t('message.logout') }}</b-button>
       </div>
     </div>
   </div>

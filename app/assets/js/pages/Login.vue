@@ -9,20 +9,25 @@
     <div class="row align-items-end full-height">
       <div class="col">
         <b-form @submit="onSubmit">
-          <b-form-group id="pin-group" label="PIN:" label-for="pin" description="Enter your PIN">
+          <b-form-group
+            id="pin-group"
+            :label="$t('message.pin')+':'"
+            label-for="pin"
+            :description="$t('message.enterPin')"
+          >
             <b-form-input
               id="pin"
               v-model="pin"
               type="number"
               class="password"
               required
-              placeholder="PIN"
+              :placeholder="$t('message.pin')"
               :state="validation"
             ></b-form-input>
-            <b-form-invalid-feedback :state="validation">Your PIN must be at least 4 digits long</b-form-invalid-feedback>
+            <b-form-invalid-feedback :state="validation">{{ $t("message.pinValidation") }}</b-form-invalid-feedback>
           </b-form-group>
 
-          <b-button block type="Submit" variant="primary">Sign In</b-button>
+          <b-button block type="submit" variant="primary">{{ $t("message.signIn") }}</b-button>
         </b-form>
       </div>
     </div>
