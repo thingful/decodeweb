@@ -35,13 +35,12 @@ module.exports = (env, options) => ({
       },
       {
         test: /\.css$/,
-        //use: [MiniCssExtractPlugin.loader, 'vue-style-loader', 'style-loader', 'css-loader']
         use: ['vue-style-loader', 'style-loader', 'css-loader']
       }
     ]
   },
+  devtool: 'source-map',
   plugins: [
-    //new MiniCssExtractPlugin({ filename: '../css/app.css' }),
     new CopyWebpackPlugin([{ from: 'static/', to: '../' }]),
     new VueLoaderPlugin()
   ]
