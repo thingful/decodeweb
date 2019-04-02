@@ -15,7 +15,9 @@
       <div class="col">
         <b-list-group>
           <b-list-group-item v-for="device in devices" v-bind:key="device.deviceToken">
-            <b-link href="#abc123">{{ device.deviceToken }}</b-link>
+            <b-link
+              :to="{ name: 'device', params: { id: device.deviceToken }}"
+            >{{ $t('message.device') }}: {{ device.deviceToken }}</b-link>
           </b-list-group-item>
         </b-list-group>
       </div>

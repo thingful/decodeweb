@@ -24,7 +24,6 @@ Vue.use(BootstrapVue);
 
 import App from './App.vue';
 import store from './store';
-//import { INITIALIZE_CONFIG } from './store/mutation-types';
 import router from './router';
 import i18n from './i18n';
 
@@ -33,8 +32,5 @@ new Vue({
   router,
   store,
   i18n,
-  beforeCreate() {
-    // this.$store.commit(INITIALIZE_CONFIG);
-  },
   render: h => h(App)
 });

@@ -24,7 +24,7 @@ export default new class zenroom {
 
 ZEN:parse([[
 Scenario 'coconut': "To run over the mobile wallet the first time and store the output as keypair.keys"
-  Given that I am known as 'identifier'
+  Given that I am known as '${identifier}'
   When I create my new keypair
   Then print all data
 ]])
@@ -32,7 +32,6 @@ Scenario 'coconut': "To run over the mobile wallet the first time and store the 
 ZEN:run()`;
 
     console.log(script);
-
     return this.exec(script);
   }
 }

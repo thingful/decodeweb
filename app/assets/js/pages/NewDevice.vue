@@ -90,8 +90,8 @@ export default {
         exposure: ""
       },
       exposureOptions: [
-        { text: "Indoors", value: "INDOORS" },
-        { text: "Outdoors", value: "OUTDOORS" }
+        { text: "Indoors", value: "INDOOR" },
+        { text: "Outdoors", value: "OUTDOOR" }
       ],
       show: true
     };
@@ -123,7 +123,8 @@ export default {
         deviceToken: this.form.deviceToken,
         longitude: this.form.longitude,
         latitude: this.form.latitude,
-        exposure: this.form.exposure
+        exposure: this.form.exposure,
+        memberships: {}
       });
       this.$router.replace({ name: "devices" });
     },

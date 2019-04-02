@@ -1,0 +1,1 @@
+export const LOAD_POLICIES = 'LOAD_POLICIES';

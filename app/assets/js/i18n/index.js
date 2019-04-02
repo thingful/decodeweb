@@ -11,6 +11,7 @@ const messages = {
       logout: 'Logout',
       enterPin: 'Enter your PIN',
       pin: 'PIN',
+      home: 'Home',
       homeText: 'This is your personal data stored in the DECODE app',
       manageDevices: 'Manage Devices',
       addDevice: 'Add Device',
@@ -24,7 +25,18 @@ const messages = {
       enterExposure: 'Enter the exposure of the device',
       indoors: 'Indoors',
       outdoors: 'Outdoors',
-      reset: 'Reset'
+      reset: 'Reset',
+      device: 'Device',
+      loadPolicies: 'Load Available Policies',
+      choosePolicy: 'Please choose a community policy for your device',
+      memberships: 'Community Memberships',
+      findCommunity: 'Find Community',
+      sensors: 'Sensors',
+      shareAllSensors: 'Share all device sensors',
+      movingAverage: 'Moving Average',
+      bin: 'Binned Data',
+      share: 'Share',
+      joinCommunity: 'Join Community'
     }
   }
 };

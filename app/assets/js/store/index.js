@@ -1,14 +1,21 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { LOGIN, LOGOUT, INITIALIZE_CONFIG, ADD_DEVICE } from './mutation-types';
+import { LOGIN, LOGOUT, INITIALIZE_CONFIG, ADD_DEVICE, POLICIES_LOADED } from './mutation-types';
+import { LOAD_POLICIES } from './action-types';
 import zenroom from '../zenroom';
 import uuid from 'uuid/v4';
+import socket from '../socket';
+import socketPlugin from './socket';
 
 Vue.use(Vuex);
+
+const plugin = socketPlugin(socket);
 
 const store = new Vuex.Store({
   state: {
     pin: null,
+    channel: null,
+    policies: [],
     configuration: {
       uuid: null,
       keypair: null,
@@ -31,9 +38,16 @@ const store = new Vuex.Store({
         let keypair = zenroom.generateKeypair(id);
         Vue.set(state, 'configuration', { uuid: id, keypair: keypair, devices: {} });
       }
+
     },
 
     [LOGOUT](state) {
+      if (state.channel !== null) {
+        console.log('Leaving')
+        state.channel.leave();
+        state.channel = null;
+      }
+
       // remove pin from localstorage and state
       localStorage.removeItem('pin');
       delete state.pin;
@@ -54,9 +68,29 @@ const store = new Vuex.Store({
     [ADD_DEVICE](state, payload) {
       let token = payload.deviceToken;
       Vue.set(state.configuration.devices, token, payload);
+    },
+
+    [POLICIES_LOADED](state, payload) {
+      state.policies = payload;
     }
   },
-  getters: {}
+  actions: {
+    [LOAD_POLICIES](context) {
+      // nothing here - used to emit an event in a plugin
+    }
+  },
+  getters: {
+    policyOptions(state) {
+      return state.policies.map(p => { return { value: p.community_id, text: p.label } });
+    },
+    policies(state) {
+      return state.policies.reduce((map, p) => {
+        map[p.community_id] = p;
+        return map;
+      }, {});
+    }
+  },
+  plugins: [plugin]
 });
 
 // subcribe to all changes to the state

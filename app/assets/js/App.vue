@@ -3,6 +3,11 @@ body {
   height: 100%;
   margin: 0;
 }
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
 </style>
 
 <template>
@@ -12,6 +17,7 @@ body {
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav class="ml-auto">
+          <b-nav-item :to="{name: 'home'}">{{ $t('message.home') }}</b-nav-item>
           <b-nav-item @click="logout">Logout</b-nav-item>
         </b-navbar-nav>
       </b-collapse>
@@ -29,8 +35,15 @@ body {
 
 <script>
 import { LOGOUT } from "./store/mutation-types";
+//import socket from "./socket";
 
 export default {
+  mounted() {
+    //let channel = socket.channel('decode:lobby', {});
+    //channel.join()
+    //  .receive('ok', resp => { console.log('Joined successfully', resp)})
+    //  .receive('error', resp => { console.log('Unable to join', resp)});
+  },
   methods: {
     logout() {
       this.$store.commit(LOGOUT);
