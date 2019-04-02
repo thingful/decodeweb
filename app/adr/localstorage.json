@@ -9,34 +9,40 @@
       "private": "6d18098252d831dae3da51405d65bd0334f7c3ee5c0d510745fd47e62d4f7c5e"
     }
   },
-  "blindSignature": {
-    "request": {
-      "public": "042d947512b34006216f189451c519bb7e5793d3aba49f9409cecb20a54c2f06d92bb9cceb5d649f8200fd57ed275a2a13172bb64a5fab0226eaa92952c456e95b1c34788b67f37f5b5b08d5392b53287bc4e0275738528fa5d94e256b3ebf9a23",
-      "zenroom": "0.9",
-      "schema": "lambda",
-      "c": {
-        "b": "043211e69c639d1d5401c8f000b4411449ef5c70b85e058df568221bf278eef04c2690c6e281736118721715eb34ea887e54cd216e6e2560696774bfecfae747a5f22c18450a2d0788c8115cb19bcd0965c4a4c510845d652aef0391d4fa21269f",
-        "a": "0413b4be515b6034f6f3e3318b1a0d5052a58ac6fdad44042d0a71029ca0f4cd18a033dcdcd6cd309eb7a4811db97e8ba12daf0f164f2d2d8e5dcd71e039597dead0a5ea54b6e74f7020519aa823527edc479e902796f51c6b929cfee8dfbe1f1c"
-      },
-      "pi_s": {
-        "rm": "b1b8077718314505b789fc2ce59e2b596d0e898828ed3fdf2e631fea52da5ab9",
-        "rr": "2c732cf08ee369b668c0c39218cfa1ca08b2ddb43b7382433cf371afe28c38e7",
-        "rk": "4ea48ddf391ae02579ea7db6206378c01b8eb7185de164df37fff87871644f47",
-        "c": "9faebbf68369873f1e16e5e4af1de4798ca097789c8c52d6229584bfbe354724"
-      },
-      "cm": "04317d313007d6d64fc9cbec7aceb06f647a87f28f89eb4b64788b36a19e9dfc461eb149f9ff16bb9ce5d34f8fdb80bbcd4466431d219c67056885c21391279c0d3a26b290391ef8d26055b79101c5f4c725e611beda5263d7e5f0f74241f9cd09",
-      "curve": "bls383",
-      "encoding": "hex"
-    }
-  },
   "devices": {
     "abc123": {
       "longitude": 12.2,
       "latitude": 52.4,
       "exposure": "INDOOR",
-      "communities": {
+      "memberships": {
         "2a745dac-015a-4cde-a348-75bccc21502b": {
+          "community_id": "2a745dac-015a-4cde-a348-75bccc21502b",
+          "label": "Community 1",
+          "descriptions": {
+            "en": "A community"
+          },
           "authorizable_attribute_id": "6a1ba9b1-3f20-4e12-ae65-154c5eb7e00f",
+          "credential_issuer_url": "https://credentials.decodeproject.eu",
+          "blind_signature_request": {
+            "request": {
+              "public": "042d947512b34006216f189451c519bb7e5793d3aba49f9409cecb20a54c2f06d92bb9cceb5d649f8200fd57ed275a2a13172bb64a5fab0226eaa92952c456e95b1c34788b67f37f5b5b08d5392b53287bc4e0275738528fa5d94e256b3ebf9a23",
+              "zenroom": "0.9",
+              "schema": "lambda",
+              "c": {
+                "b": "043211e69c639d1d5401c8f000b4411449ef5c70b85e058df568221bf278eef04c2690c6e281736118721715eb34ea887e54cd216e6e2560696774bfecfae747a5f22c18450a2d0788c8115cb19bcd0965c4a4c510845d652aef0391d4fa21269f",
+                "a": "0413b4be515b6034f6f3e3318b1a0d5052a58ac6fdad44042d0a71029ca0f4cd18a033dcdcd6cd309eb7a4811db97e8ba12daf0f164f2d2d8e5dcd71e039597dead0a5ea54b6e74f7020519aa823527edc479e902796f51c6b929cfee8dfbe1f1c"
+              },
+              "pi_s": {
+                "rm": "b1b8077718314505b789fc2ce59e2b596d0e898828ed3fdf2e631fea52da5ab9",
+                "rr": "2c732cf08ee369b668c0c39218cfa1ca08b2ddb43b7382433cf371afe28c38e7",
+                "rk": "4ea48ddf391ae02579ea7db6206378c01b8eb7185de164df37fff87871644f47",
+                "c": "9faebbf68369873f1e16e5e4af1de4798ca097789c8c52d6229584bfbe354724"
+              },
+              "cm": "04317d313007d6d64fc9cbec7aceb06f647a87f28f89eb4b64788b36a19e9dfc461eb149f9ff16bb9ce5d34f8fdb80bbcd4466431d219c67056885c21391279c0d3a26b290391ef8d26055b79101c5f4c725e611beda5263d7e5f0f74241f9cd09",
+              "curve": "bls383",
+              "encoding": "hex"
+            }
+          },
           "credential": {
             "sam": {
               "zenroom": "0.9",
@@ -55,7 +61,7 @@
               "schema": "aggsigma"
             }
           },
-          "blindproofCredential": {
+          "blindproof_credential": {
             "verifier": {
               "zenroom": "0.9",
               "schema": "issue_verify",
