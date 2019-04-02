@@ -1,7 +1,7 @@
 defmodule DecodeWeb.DecodeChannel do
   use Phoenix.Channel
 
-  def join("decode:" <> uid, _payload, socket) do
+  def join("decode:" <> path, _payload, socket) do
     {:ok, socket}
   end
 
@@ -17,5 +17,7 @@ defmodule DecodeWeb.DecodeChannel do
       {:error, msg} ->
         push(socket, "error", msg)
     end
+
+    {:noreply, socket}
   end
 end
