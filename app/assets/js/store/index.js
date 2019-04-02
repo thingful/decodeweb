@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { LOGIN, LOGOUT, INITIALIZE_CONFIG, ADD_DEVICE, POLICIES_LOADED } from './mutation-types';
-import { LOAD_POLICIES } from './action-types';
+import { LOGIN, LOGOUT, INITIALIZE_CONFIG, ADD_DEVICE, POLICIES_LOADED, ADD_MEMBERSHIP } from './mutation-types';
+import { LOAD_POLICIES, JOIN_COMMUNITY } from './action-types';
 import zenroom from '../zenroom';
 import uuid from 'uuid/v4';
 import socket from '../socket';
@@ -15,7 +15,7 @@ const store = new Vuex.Store({
   state: {
     pin: null,
     channel: null,
-    policies: [],
+    policies: {},
     configuration: {
       uuid: null,
       keypair: null,
@@ -71,23 +71,35 @@ const store = new Vuex.Store({
     },
 
     [POLICIES_LOADED](state, payload) {
-      state.policies = payload;
+      state.policies = payload.reduce((map, p) => {
+        map[p.community_id] = p;
+        return map;
+      }, {});
+    },
+
+    [ADD_MEMBERSHIP](state, payload) {
+      let membership = { policy: payload.policy, blind_signature: payload.blindSignature, credential: null, blindproof_credential: null };
+      Vue.set(state.configuration.devices[payload.deviceToken].memberships, payload.policy.community_id, membership);
     }
   },
   actions: {
     [LOAD_POLICIES](context) {
-      // nothing here - used to emit an event in a plugin
+      // nothing here - used to emit an event via the socket in our plugin
+    },
+    [JOIN_COMMUNITY]({ state, commit }, payload) {
+      // create our blind signature
+      let blindSignature = zenroom.blindSignatureRequest(state.configuration.uuid, state.configuration.keypair);
+
+      // store the community/policy into our state for the device
+      let community = state.policies[payload.community_id];
+      commit(ADD_MEMBERSHIP, { deviceToken: payload.deviceToken, policy: community, blindSignature: blindSignature });
+      // send message to backend to
     }
   },
   getters: {
     policyOptions(state) {
-      return state.policies.map(p => { return { value: p.community_id, text: p.label } });
-    },
-    policies(state) {
-      return state.policies.reduce((map, p) => {
-        map[p.community_id] = p;
-        return map;
-      }, {});
+      return Object.keys(state.policies).map(id => { return { value: id, text: state.policies[id].label } })
+        .sort((a, b) => a.text > b.text);
     }
   },
   plugins: [plugin]
