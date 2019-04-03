@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { LOGIN, LOGOUT, INITIALIZE_CONFIG, ADD_DEVICE, POLICIES_LOADED, ADD_MEMBERSHIP } from './mutation-types';
-import { LOAD_POLICIES, JOIN_COMMUNITY } from './action-types';
+import { LOGIN, LOGOUT, INITIALIZE_CONFIG, ADD_DEVICE, POLICIES_LOADED, ADD_MEMBERSHIP, SAVE_AUTHORIZABLE_ATTRIBUTE } from './mutation-types';
+import { LOAD_POLICIES, LOAD_AUTHORIZABLE_ATTRIBUTE, JOIN_COMMUNITY } from './action-types';
 import zenroom from '../zenroom';
 import uuid from 'uuid/v4';
 import socket from '../socket';
@@ -72,28 +72,38 @@ const store = new Vuex.Store({
 
     [POLICIES_LOADED](state, payload) {
       state.policies = payload.reduce((map, p) => {
-        map[p.community_id] = p;
+        map[p.authorizable_attribute_id] = p;
         return map;
       }, {});
     },
 
-    [ADD_MEMBERSHIP](state, payload) {
-      let membership = { policy: payload.policy, blind_signature: payload.blindSignature, credential: null, blindproof_credential: null };
-      Vue.set(state.configuration.devices[payload.deviceToken].memberships, payload.policy.community_id, membership);
+    [SAVE_AUTHORIZABLE_ATTRIBUTE](state, payload) {
+      // build full membership object, currently we only know the authorizable
+      // attribute, and we can build a blind signature
+
+      // create our blind signature
+      let blindSignature = zenroom.blindSignatureRequest(state.configuration.uuid, state.configuration.keypair);
+      let policy = state.policies[payload.authorizable_attribute.authorizable_attribute_id];
+
+      let membership = {
+        authorizable_attribute: payload.authorizable_attribute,
+        policy: policy,
+        blind_signature: blindSignature,
+        credential: null,
+        blind_proof_credential: null
+      };
+
+      Vue.set(state.configuration.devices[payload.device_token].memberships, payload.authorizable_attribute.authorizable_attribute_id, membership);
     }
   },
   actions: {
     [LOAD_POLICIES](context) {
       // nothing here - used to emit an event via the socket in our plugin
     },
+    [LOAD_AUTHORIZABLE_ATTRIBUTE](context) {
+      // again nothing - used to hook to our socket
+    },
     [JOIN_COMMUNITY]({ state, commit }, payload) {
-      // create our blind signature
-      let blindSignature = zenroom.blindSignatureRequest(state.configuration.uuid, state.configuration.keypair);
-
-      // store the community/policy into our state for the device
-      let community = state.policies[payload.community_id];
-      commit(ADD_MEMBERSHIP, { deviceToken: payload.deviceToken, policy: community, blindSignature: blindSignature });
-      // send message to backend to
     }
   },
   getters: {

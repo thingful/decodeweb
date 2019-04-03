@@ -6,8 +6,8 @@ import Devices from '../pages/Devices.vue';
 import NewDevice from '../pages/NewDevice.vue';
 import Device from '../pages/Device.vue';
 import ChooseCommunity from '../pages/ChooseCommunity.vue';
+import JoinCommunity from '../pages/JoinCommunity.vue';
 //import DeviceCommunity from '../pages/DeviceCommunity.vue';
-//import JoinCommunity from '../pages/JoinCommunity.vue';
 
 import store from '../store';
 import { INITIALIZE_CONFIG } from '../store/mutation-types';
@@ -49,9 +49,15 @@ const router = new Router({
       props: true
     },
     {
-      path: '/choose/:id',
+      path: '/devices/:id/choose',
       name: 'choose',
       component: ChooseCommunity,
+      props: true
+    },
+    {
+      path: '/devices/:id/join/:attribute_id',
+      name: 'join',
+      component: JoinCommunity,
       props: true
     }
     //{

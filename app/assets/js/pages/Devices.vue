@@ -1,5 +1,7 @@
 <template>
   <div>
+    <h1>{{ $t('message.manageDevices')}}</h1>
+
     <div class="row">
       <div class="col-sm">
         <b-button

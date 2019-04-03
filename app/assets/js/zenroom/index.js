@@ -49,6 +49,6 @@ Scenario 'coconut': "To run after the request keypair is stored (keypair.keys)"
 
 ZEN:run()`
 
-    return this.exec(script, { keys: keypair });
+    return JSON.parse(this.exec(script, { keys: keypair }));
   }
 }

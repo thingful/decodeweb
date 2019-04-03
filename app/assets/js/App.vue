@@ -7,6 +7,11 @@ body {
 h1 {
   font-size: 2rem;
   margin-bottom: 1rem;
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.3rem;
 }
 </style>
 
@@ -18,6 +23,7 @@ h1 {
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav class="ml-auto">
           <b-nav-item :to="{name: 'home'}">{{ $t('message.home') }}</b-nav-item>
+          <b-nav-item :to="{name: 'devices'}">{{ $t('message.manageDevices') }}</b-nav-item>
           <b-nav-item @click="logout">Logout</b-nav-item>
         </b-navbar-nav>
       </b-collapse>

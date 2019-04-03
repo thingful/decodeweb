@@ -1,5 +1,7 @@
 <template>
   <div>
+    <h1>{{ $t('message.addDevice')}}</h1>
+
     <b-form @submit="onSubmit" @reset="onReset" v-if="show">
       <div class="form-row">
         <div class="col">

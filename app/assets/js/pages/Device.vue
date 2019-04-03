@@ -3,9 +3,10 @@
 
 <template>
   <div>
-    <h1>{{ $t('message.device') }}: {{ device.deviceToken }}</h1>
+    <h1>{{ $t('message.device')}}: {{ device.deviceToken }}</h1>
 
-    <h4>{{ $t('message.memberships') }}:</h4>
+    <h2>{{ $t('message.memberships') }}</h2>
+
     <b-list-group>
       <b-list-group-item
         v-for="community in device.memberships"
@@ -18,7 +19,7 @@
     </b-list-group>
 
     <b-form>
-      <div class="form-row mt-5">
+      <div class="form-row mt-3">
         <div class="col">
           <b-button
             block

@@ -3,7 +3,10 @@
 
 <template>
   <div>
-    <h1>{{ $t('message.device') }}: {{ device.deviceToken }}</h1>
+    <h1>{{ $t('message.chooseCommunity')}}</h1>
+
+    <h2>{{ $t('message.device') }}: {{ device.deviceToken }}</h2>
+
     <div class="form-row">
       <div class="col">
         <small>{{ $t('message.choosePolicy') }}</small>
@@ -54,7 +57,10 @@
 </template>
 
 <script>
-import { LOAD_POLICIES, JOIN_COMMUNITY } from "../store/action-types";
+import {
+  LOAD_POLICIES,
+  LOAD_AUTHORIZABLE_ATTRIBUTE
+} from "../store/action-types";
 import operation from "../components/operation.vue";
 
 export default {
@@ -75,9 +81,9 @@ export default {
       this.$store.dispatch(LOAD_POLICIES);
     },
     onJoin() {
-      this.$store.dispatch(JOIN_COMMUNITY, {
-        deviceToken: this.$route.params.id,
-        community_id: this.selected
+      this.$store.dispatch(LOAD_AUTHORIZABLE_ATTRIBUTE, {
+        device_token: this.$route.params.id,
+        authorizable_attribute_id: this.selected
       });
       this.loading = true;
     }
@@ -103,6 +109,19 @@ export default {
       return this.$store.state.policies[this.selected].descriptions[
         this.$i18n.locale
       ];
+    },
+    membership() {
+      return this.$store.state.configuration.devices[this.$route.params.id]
+        .memberships[this.selected];
+    }
+  },
+  watch: {
+    membership: function(newMembership, oldMembership) {
+      // TODO: maybe do something else if we don't get a membership info properly
+      this.$router.replace({
+        name: "join",
+        params: { id: this.$route.params.id, attribute_id: this.selected }
+      });
     }
   }
 };
