@@ -53,12 +53,12 @@ defmodule Decode.Credentials do
   in the front end.
   """
   def obtain_credential(request) do
-    case post("/credential", request) do
+    case post("/credential/", request) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         {:ok, body}
 
-      {:ok, %HTTPoison.Response{body: body}} ->
-        {:error, body}
+      {:ok, %HTTPoison.Response{body: %{"detail" => msg}}} ->
+        {:error, msg}
 
       {:error, error} ->
         {:error, error}
