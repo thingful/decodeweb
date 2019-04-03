@@ -1,6 +1,3 @@
-<style scoped>
-</style>
-
 <template>
   <div>
     <h1>{{ $t('message.chooseCommunity')}}</h1>

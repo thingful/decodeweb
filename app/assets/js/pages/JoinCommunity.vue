@@ -9,6 +9,8 @@ h2 {
     <h1>{{ $t('message.joinCommunity')}}</h1>
     <h2>{{ policy.label }}</h2>
 
+    <b-alert :show="!!error" variant="danger">{{ error }}</b-alert>
+
     <b-form @submit="onSubmit">
       <b-form-group
         v-for="(info, index) in authorizableAttributeInfo"
@@ -19,18 +21,24 @@ h2 {
         <b-form-input required :id="info.id" v-model="info.value" :type="info.type"></b-form-input>
       </b-form-group>
 
-      <b-button block type="submit" variant="danger">{{ $t("message.joinCommunity") }}</b-button>
+      <b-button block type="submit" variant="danger" :disabled="loading">
+        <b-spinner small v-if="loading"></b-spinner>
+        {{ $t("message.joinCommunity") }}
+      </b-button>
     </b-form>
   </div>
 </template>
 
 <script>
 import _ from "lodash";
+import { REQUEST_CREDENTIAL } from "../store/action-types";
+import { CLEAR_ERROR } from "../store/mutation-types";
 
 export default {
   data() {
     return {
-      authorizableAttributeInfo: []
+      authorizableAttributeInfo: [],
+      loading: false
     };
   },
   mounted() {
@@ -63,6 +71,14 @@ export default {
     policy() {
       return this.$store.state.configuration.devices[this.$route.params.id]
         .memberships[this.$route.params.attribute_id].policy;
+    },
+    error() {
+      return this.$store.state.error;
+    }
+  },
+  watch: {
+    error: function(newErr, oldErr) {
+      this.loading = false;
     }
   },
   methods: {
@@ -86,7 +102,13 @@ export default {
         optional_values: []
       };
 
-      console.log(credentialRequest);
+      this.$store.dispatch(REQUEST_CREDENTIAL, {
+        device_token: this.$route.params.id,
+        credential_request: credentialRequest
+      });
+
+      this.$store.commit(CLEAR_ERROR);
+      this.loading = true;
     }
   }
 };

@@ -10,7 +10,7 @@ import JoinCommunity from '../pages/JoinCommunity.vue';
 //import DeviceCommunity from '../pages/DeviceCommunity.vue';
 
 import store from '../store';
-import { INITIALIZE_CONFIG } from '../store/mutation-types';
+import { INITIALIZE_CONFIG, CLEAR_ERROR } from '../store/mutation-types';
 
 Vue.use(Router);
 
@@ -76,6 +76,8 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
+  store.commit(CLEAR_ERROR);
+
   if (store.state.pin) {
     if (to.path === '/login') {
       next('/');

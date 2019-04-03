@@ -1,5 +1,5 @@
-import { LOAD_POLICIES, LOAD_AUTHORIZABLE_ATTRIBUTE } from "./action-types";
-import { POLICIES_LOADED, SAVE_AUTHORIZABLE_ATTRIBUTE } from "./mutation-types";
+import { LOAD_POLICIES, LOAD_AUTHORIZABLE_ATTRIBUTE, REQUEST_CREDENTIAL, CREATE_BLINDPROOF } from "./action-types";
+import { POLICIES_LOADED, SAVE_AUTHORIZABLE_ATTRIBUTE, SAVE_CI_SIGNED_CREDENTIAL, SAVE_ERROR } from "./mutation-types";
 
 export default function createChannelPlugin(socket) {
   let channel = socket.channel('decode:lobby', {})
@@ -8,6 +8,11 @@ export default function createChannelPlugin(socket) {
     .receive('error', resp => { console.log('Unable to join', resp) });
 
   return store => {
+    channel.on('error', (payload) => {
+      console.log(payload);
+      store.commit(SAVE_ERROR, payload.error);
+    });
+
     channel.on('policies_loaded', (payload) => {
       let policies = payload.policies;
       store.commit(POLICIES_LOADED, policies);
@@ -15,6 +20,14 @@ export default function createChannelPlugin(socket) {
 
     channel.on('authorizable_attribute_loaded', (payload) => {
       store.commit(SAVE_AUTHORIZABLE_ATTRIBUTE, payload);
+    });
+
+    channel.on('credential', (payload) => {
+      store.dispatch(CREATE_BLINDPROOF, payload);
+    });
+
+    channel.on('credential_error', (payload) => {
+      store.commit(SAVE_ERROR, payload.error);
     });
 
     store.subscribeAction((action, state) => {
@@ -25,6 +38,10 @@ export default function createChannelPlugin(socket) {
 
         case LOAD_AUTHORIZABLE_ATTRIBUTE:
           channel.push('load_authorizable_attribute', action.payload);
+          break;
+
+        case REQUEST_CREDENTIAL:
+          channel.push('request_credential', action.payload);
           break;
 
         default:

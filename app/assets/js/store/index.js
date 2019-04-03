@@ -1,7 +1,22 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { LOGIN, LOGOUT, INITIALIZE_CONFIG, ADD_DEVICE, POLICIES_LOADED, ADD_MEMBERSHIP, SAVE_AUTHORIZABLE_ATTRIBUTE } from './mutation-types';
-import { LOAD_POLICIES, LOAD_AUTHORIZABLE_ATTRIBUTE, JOIN_COMMUNITY } from './action-types';
+import {
+  LOGIN,
+  LOGOUT,
+  INITIALIZE_CONFIG,
+  ADD_DEVICE,
+  POLICIES_LOADED,
+  SAVE_AUTHORIZABLE_ATTRIBUTE,
+  SAVE_ERROR,
+  CLEAR_ERROR,
+  SAVE_BLINDPROOF
+} from './mutation-types';
+import {
+  LOAD_POLICIES,
+  LOAD_AUTHORIZABLE_ATTRIBUTE,
+  REQUEST_CREDENTIAL,
+  CREATE_BLINDPROOF
+} from './action-types';
 import zenroom from '../zenroom';
 import uuid from 'uuid/v4';
 import socket from '../socket';
@@ -20,7 +35,8 @@ const store = new Vuex.Store({
       uuid: null,
       keypair: null,
       devices: {}
-    }
+    },
+    error: null
   },
   mutations: {
     [LOGIN](state, payload) {
@@ -78,10 +94,6 @@ const store = new Vuex.Store({
     },
 
     [SAVE_AUTHORIZABLE_ATTRIBUTE](state, payload) {
-      // build full membership object, currently we only know the authorizable
-      // attribute, and we can build a blind signature
-
-      // create our blind signature
       let blindSignature = zenroom.blindSignatureRequest(state.configuration.uuid, state.configuration.keypair);
       let policy = state.policies[payload.authorizable_attribute.authorizable_attribute_id];
 
@@ -94,6 +106,24 @@ const store = new Vuex.Store({
       };
 
       Vue.set(state.configuration.devices[payload.device_token].memberships, payload.authorizable_attribute.authorizable_attribute_id, membership);
+    },
+
+    [SAVE_ERROR](state, msg) {
+      state.error = msg;
+    },
+
+    [CLEAR_ERROR](state) {
+      state.error = null;
+    },
+
+    [SAVE_BLINDPROOF](state, payload) {
+      let membership = state.configuration.devices[payload.device_token].
+        memberships[payload.authorizable_attribute_id];
+
+      membership = Object.assign(membership, {
+        credential: JSON.parse(payload.credential),
+        blind_proof_credential: JSON.parse(payload.blind_proof_credential),
+      });
     }
   },
   actions: {
@@ -103,7 +133,32 @@ const store = new Vuex.Store({
     [LOAD_AUTHORIZABLE_ATTRIBUTE](context) {
       // again nothing - used to hook to our socket
     },
-    [JOIN_COMMUNITY]({ state, commit }, payload) {
+    [REQUEST_CREDENTIAL](context, payload) {
+    },
+    [CREATE_BLINDPROOF]({ state, commit, dispatch }, payload) {
+      let ciVerifyKeypair = state.configuration.devices[payload.device_token].
+        memberships[payload.authorizable_attribute_id].
+        authorizable_attribute.verification_key;
+
+      let credential = zenroom.createCredential(
+        state.configuration.uuid,
+        state.configuration.keypair,
+        payload.ciCredential
+      );
+
+      let blindproofCredential = zenroom.createBlindproofCredential(
+        state.configuration.uuid,
+        credential,
+        JSON.stringify(ciVerifyKeypair)
+      );
+
+      // console.log(blindproofCredential);
+      commit(SAVE_BLINDPROOF, {
+        device_token: payload.device_token,
+        authorizable_attribute_id: payload.authorizable_attribute_id,
+        credential: credential,
+        blind_proof_credential: blindproofCredential
+      });
     }
   },
   getters: {
