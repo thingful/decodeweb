@@ -33,7 +33,27 @@ defmodule DecodeWeb.DecodeChannel do
         })
 
       {:error, msg} ->
-        push(socket, "error", msg)
+        push(socket, "error", %{"error" => msg})
+    end
+
+    {:noreply, socket}
+  end
+
+  def handle_in(
+        "request_credential",
+        %{"device_token" => device_token, "credential_request" => credential_request},
+        socket
+      ) do
+    case Decode.Credentials.obtain_credential(credential_request) do
+      {:ok, credential} ->
+        push(socket, "credential", %{
+          device_token: device_token,
+          authorizable_attribute_id: credential_request["authorizable_attribute_id"],
+          ciCredential: credential
+        })
+
+      {:error, msg} ->
+        push(socket, "error", %{"error" => msg})
     end
 
     {:noreply, socket}
