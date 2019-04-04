@@ -34,8 +34,6 @@ defmodule Decode.Encoder do
   Creates a stream on the stream encoder
   """
   def create_stream(request) do
-    IO.inspect(request)
-
     case post("CreateStream", request) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         {:ok, body}
