@@ -1,0 +1,57 @@
+FROM umbrellium/phoenix-builder:v0.1.0 as builder
+
+LABEL maintainer="Sam Mulube <sam@umbrellium.co.uk>"
+
+ENV MIX_ENV=prod
+
+RUN apk add --update --no-cache \
+    git \
+    build-base \
+    python \
+    make \
+    libpng-dev
+
+COPY . /app
+
+WORKDIR /app
+
+RUN echo $(cat mix.exs| grep version: | head -n1 | awk -F: '{print $2}' | sed 's/[\",]//g' | tr -d '[[:space:]]') > .version
+RUN mix deps.get && \
+    mix compile && \
+    cd assets && \
+    npm install && \
+    npm run deploy && \
+    cd .. && \
+    mix phx.digest
+
+RUN mix release --env=prod
+
+RUN mkdir -p /app/target
+
+RUN tar zxf /app/_build/prod/rel/demo/releases/$(cat mix.exs| grep version: | head -n1 | awk -F: '{print $2}' | sed 's/[\",]//g' | tr -d '[[:space:]]')/demo.tar.gz -C /app/target
+
+FROM alpine:3.8
+
+LABEL maintainer="Sam Mulube <sam@thingful.net>"
+
+RUN apk add --update --no-cache \
+  ncurses-libs \
+  bash \
+  openssl \
+  ca-certificates \
+  jq \
+  curl \
+  openssh \
+  bind-tools \
+  && update-ca-certificates
+
+COPY --from=builder /app/target /app
+COPY --from=builder /app/.version /app/
+
+RUN adduser -D demo \
+  && chown -R demo:demo /app
+
+USER demo
+
+ENTRYPOINT ["/app/bin/demo"]
+CMD ["foreground"]
