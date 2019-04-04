@@ -28,7 +28,7 @@ RUN mix release --env=prod
 
 RUN mkdir -p /app/target
 
-RUN tar zxf /app/_build/prod/rel/demo/releases/$(cat mix.exs| grep version: | head -n1 | awk -F: '{print $2}' | sed 's/[\",]//g' | tr -d '[[:space:]]')/demo.tar.gz -C /app/target
+RUN tar zxf /app/_build/prod/rel/decode/releases/$(cat mix.exs| grep version: | head -n1 | awk -F: '{print $2}' | sed 's/[\",]//g' | tr -d '[[:space:]]')/decode.tar.gz -C /app/target
 
 FROM alpine:3.8
 
@@ -48,10 +48,10 @@ RUN apk add --update --no-cache \
 COPY --from=builder /app/target /app
 COPY --from=builder /app/.version /app/
 
-RUN adduser -D demo \
-  && chown -R demo:demo /app
+RUN adduser -D decode \
+  && chown -R decode:decode /app
 
-USER demo
+USER decode
 
-ENTRYPOINT ["/app/bin/demo"]
+ENTRYPOINT ["/app/bin/decode"]
 CMD ["foreground"]
