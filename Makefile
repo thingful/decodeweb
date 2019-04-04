@@ -1,4 +1,4 @@
-# Makefile for developing this server for Changi CEA Management.
+# Makefile for developing this server
 
 # capture the current users id and group id.
 UID := $(shell id -u)
