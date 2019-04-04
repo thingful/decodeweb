@@ -1,5 +1,10 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import zenroom from '../zenroom';
+import uuid from 'uuid/v4';
+import socket from '../socket';
+import socketPlugin from './socket';
+
 import {
   LOGIN,
   LOGOUT,
@@ -10,19 +15,17 @@ import {
   SAVE_ERROR,
   CLEAR_ERROR,
   SAVE_BLINDPROOF,
-  SAVE_STREAM
+  SAVE_STREAM,
+  REMOVE_MEMBERSHIP
 } from './mutation-types';
 import {
   LOAD_POLICIES,
   LOAD_AUTHORIZABLE_ATTRIBUTE,
   REQUEST_CREDENTIAL,
   CREATE_BLINDPROOF,
-  CREATE_STREAM
+  CREATE_STREAM,
+  DELETE_MEMBERSHIP
 } from './action-types';
-import zenroom from '../zenroom';
-import uuid from 'uuid/v4';
-import socket from '../socket';
-import socketPlugin from './socket';
 
 Vue.use(Vuex);
 
@@ -104,7 +107,8 @@ const store = new Vuex.Store({
         policy: policy,
         blind_signature: blindSignature,
         credential: null,
-        blind_proof_credential: null
+        blind_proof_credential: null,
+        stream: null
       };
 
       Vue.set(state.configuration.devices[payload.device_token].memberships, payload.authorizable_attribute.authorizable_attribute_id, membership);
@@ -135,6 +139,14 @@ const store = new Vuex.Store({
       membership = Object.assign(membership, {
         stream: payload.stream
       });
+    },
+
+    [REMOVE_MEMBERSHIP](state, payload) {
+      console.log('REMOVING MEMBERSHIP');
+      console.log(payload);
+
+      let device = state.configuration.devices[payload.device_token];
+      Vue.delete(device.memberships, payload.attribute_id);
     }
   },
   actions: {
@@ -190,6 +202,11 @@ const store = new Vuex.Store({
         credential: credential,
         blind_proof_credential: blindproofCredential
       });
+    },
+    [DELETE_MEMBERSHIP]({ commit }, payload) {
+      console.log('DELETIING MEMBERSHIP');
+      console.log(payload);
+      commit(REMOVE_MEMBERSHIP, payload);
     }
   },
   getters: {

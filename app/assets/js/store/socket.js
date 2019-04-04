@@ -1,4 +1,4 @@
-import { LOAD_POLICIES, LOAD_AUTHORIZABLE_ATTRIBUTE, REQUEST_CREDENTIAL, CREATE_BLINDPROOF, CREATE_STREAM } from "./action-types";
+import { LOAD_POLICIES, LOAD_AUTHORIZABLE_ATTRIBUTE, REQUEST_CREDENTIAL, CREATE_BLINDPROOF, CREATE_STREAM, DELETE_MEMBERSHIP } from "./action-types";
 import { POLICIES_LOADED, SAVE_AUTHORIZABLE_ATTRIBUTE, SAVE_ERROR, SAVE_STREAM } from "./mutation-types";
 
 export default function createChannelPlugin(socket) {
@@ -47,6 +47,10 @@ export default function createChannelPlugin(socket) {
 
         case CREATE_STREAM:
           channel.push('create_stream', action.payload);
+          break;
+
+        case DELETE_MEMBERSHIP:
+          channel.push('delete_stream', action.payload.stream);
           break;
 
         default:

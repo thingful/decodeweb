@@ -15,9 +15,6 @@
         <b-link
           :to="{name: 'deviceMembership', params: { id: device.deviceToken, attribute_id: membership.authorizable_attribute.authorizable_attribute_id }}"
         >{{ membership.policy.label }}</b-link>
-        <b-link href="#">
-          <Octicon name="x" class="float-right"></Octicon>
-        </b-link>
       </b-list-group-item>
     </b-list-group>
 

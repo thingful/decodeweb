@@ -85,4 +85,16 @@ defmodule DecodeWeb.DecodeChannel do
 
     {:noreply, socket}
   end
+
+  def handle_in("delete_stream", request, socket) do
+    case Decode.Encoder.delete_stream(request) do
+      {:ok, _} ->
+        push(socket, "stream_deleted", %{})
+
+      {:error, msg} ->
+        push(socket, "error", msg)
+    end
+
+    {:noreply, socket}
+  end
 end

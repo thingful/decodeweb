@@ -7,10 +7,14 @@ import NewDevice from '../pages/NewDevice.vue';
 import Device from '../pages/Device.vue';
 import ChooseCommunity from '../pages/ChooseCommunity.vue';
 import JoinCommunity from '../pages/JoinCommunity.vue';
-//import DeviceCommunity from '../pages/DeviceCommunity.vue';
+import DeviceMembership from '../pages/DeviceMembership.vue';
 
 import store from '../store';
-import { INITIALIZE_CONFIG, CLEAR_ERROR } from '../store/mutation-types';
+
+import {
+  INITIALIZE_CONFIG,
+  CLEAR_ERROR
+} from '../store/mutation-types';
 
 Vue.use(Router);
 
@@ -59,13 +63,13 @@ const router = new Router({
       name: 'join',
       component: JoinCommunity,
       props: true
+    },
+    {
+      path: '/devices/:id/membership/:attribute_id',
+      name: 'deviceMembership',
+      component: DeviceMembership,
+      props: true
     }
-    //{
-    //  path: '/devices/:id/community/:community_id',
-    //  name: 'deviceCommunity',
-    //  components: DeviceCommunity,
-    //  props: true
-    //},
   ]
 });
 

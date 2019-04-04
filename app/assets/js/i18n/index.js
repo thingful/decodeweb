@@ -38,7 +38,11 @@ const messages = {
       movingAverage: 'Moving Average',
       bin: 'Binned Data',
       share: 'Share',
-      joinCommunity: 'Join Community'
+      joinCommunity: 'Join Community',
+      deviceMembership: 'Manage Membership',
+      deleteMembership: 'Delete Membership',
+      confirmation: 'Confirmation',
+      confirmationText: 'Are you sure you want to delete your membership of this community? You will no longer be able to access the community dashboard.'
     }
   }
 };
