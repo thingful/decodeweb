@@ -66,16 +66,11 @@ const router = new Router({
     //  components: DeviceCommunity,
     //  props: true
     //},
-    //{
-    //  path: '/devices/:id/join',
-    //  name: 'joinCommunity',
-    //  components: JoinCommunity,
-    //  props: true
-    //}
   ]
 });
 
 router.beforeEach((to, from, next) => {
+  // ensure error cleared each time we go to a new page
   store.commit(CLEAR_ERROR);
 
   if (store.state.pin) {

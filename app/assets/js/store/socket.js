@@ -1,5 +1,5 @@
-import { LOAD_POLICIES, LOAD_AUTHORIZABLE_ATTRIBUTE, REQUEST_CREDENTIAL, CREATE_BLINDPROOF } from "./action-types";
-import { POLICIES_LOADED, SAVE_AUTHORIZABLE_ATTRIBUTE, SAVE_CI_SIGNED_CREDENTIAL, SAVE_ERROR } from "./mutation-types";
+import { LOAD_POLICIES, LOAD_AUTHORIZABLE_ATTRIBUTE, REQUEST_CREDENTIAL, CREATE_BLINDPROOF, CREATE_STREAM } from "./action-types";
+import { POLICIES_LOADED, SAVE_AUTHORIZABLE_ATTRIBUTE, SAVE_ERROR, SAVE_STREAM } from "./mutation-types";
 
 export default function createChannelPlugin(socket) {
   let channel = socket.channel('decode:lobby', {})
@@ -26,8 +26,9 @@ export default function createChannelPlugin(socket) {
       store.dispatch(CREATE_BLINDPROOF, payload);
     });
 
-    channel.on('credential_error', (payload) => {
-      store.commit(SAVE_ERROR, payload.error);
+    channel.on('new_stream', (payload) => {
+      console.log(payload);
+      store.commit(SAVE_STREAM, payload);
     });
 
     store.subscribeAction((action, state) => {
@@ -42,6 +43,10 @@ export default function createChannelPlugin(socket) {
 
         case REQUEST_CREDENTIAL:
           channel.push('request_credential', action.payload);
+          break;
+
+        case CREATE_STREAM:
+          channel.push('create_stream', action.payload);
           break;
 
         default:

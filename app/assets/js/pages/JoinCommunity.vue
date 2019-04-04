@@ -74,11 +74,21 @@ export default {
     },
     error() {
       return this.$store.state.error;
+    },
+    stream() {
+      return this.$store.state.configuration.devices[this.$route.params.id]
+        .memberships[this.$route.params.attribute_id].stream;
     }
   },
   watch: {
     error: function(newErr, oldErr) {
       this.loading = false;
+    },
+    stream: function(newStream, oldStream) {
+      this.$router.replace({
+        name: "device",
+        params: { id: this.$route.params.id }
+      });
     }
   },
   methods: {

@@ -9,13 +9,15 @@ import {
   SAVE_AUTHORIZABLE_ATTRIBUTE,
   SAVE_ERROR,
   CLEAR_ERROR,
-  SAVE_BLINDPROOF
+  SAVE_BLINDPROOF,
+  SAVE_STREAM
 } from './mutation-types';
 import {
   LOAD_POLICIES,
   LOAD_AUTHORIZABLE_ATTRIBUTE,
   REQUEST_CREDENTIAL,
-  CREATE_BLINDPROOF
+  CREATE_BLINDPROOF,
+  CREATE_STREAM
 } from './action-types';
 import zenroom from '../zenroom';
 import uuid from 'uuid/v4';
@@ -124,21 +126,32 @@ const store = new Vuex.Store({
         credential: JSON.parse(payload.credential),
         blind_proof_credential: JSON.parse(payload.blind_proof_credential),
       });
+    },
+
+    [SAVE_STREAM](state, payload) {
+      let membership = state.configuration.devices[payload.device_token].
+        memberships[payload.authorizable_attribute_id];
+
+      membership = Object.assign(membership, {
+        stream: payload.stream
+      });
     }
   },
   actions: {
-    [LOAD_POLICIES](context) {
+    [LOAD_POLICIES]() {
       // nothing here - used to emit an event via the socket in our plugin
     },
-    [LOAD_AUTHORIZABLE_ATTRIBUTE](context) {
+    [LOAD_AUTHORIZABLE_ATTRIBUTE]() {
       // again nothing - used to hook to our socket
     },
-    [REQUEST_CREDENTIAL](context, payload) {
+    [REQUEST_CREDENTIAL]() {
     },
+    [CREATE_STREAM]() { },
     [CREATE_BLINDPROOF]({ state, commit, dispatch }, payload) {
-      let ciVerifyKeypair = state.configuration.devices[payload.device_token].
-        memberships[payload.authorizable_attribute_id].
-        authorizable_attribute.verification_key;
+      let device = state.configuration.devices[payload.device_token];
+      let membership = device.memberships[payload.authorizable_attribute_id];
+
+      let ciVerifyKeypair = membership.authorizable_attribute.verification_key;
 
       let credential = zenroom.createCredential(
         state.configuration.uuid,
@@ -152,7 +165,25 @@ const store = new Vuex.Store({
         JSON.stringify(ciVerifyKeypair)
       );
 
-      // console.log(blindproofCredential);
+      let createStreamMsg = {
+        device_token: payload.device_token,
+        community_id: membership.policy.community_id,
+        recipient_public_key: membership.policy.public_key,
+        location: {
+          longitude: device.longitude,
+          latitude: device.latitude,
+        },
+        exposure: device.exposure,
+        operations: membership.policy.operations
+      };
+
+      // dispatch action to call the encoder to create the stream
+      dispatch(CREATE_STREAM, {
+        request: createStreamMsg,
+        device_token: payload.device_token,
+        authorizable_attribute_id: payload.authorizable_attribute_id
+      });
+
       commit(SAVE_BLINDPROOF, {
         device_token: payload.device_token,
         authorizable_attribute_id: payload.authorizable_attribute_id,

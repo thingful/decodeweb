@@ -58,4 +58,31 @@ defmodule DecodeWeb.DecodeChannel do
 
     {:noreply, socket}
   end
+
+  @doc """
+  Handle stream creation message
+  """
+  def handle_in(
+        "create_stream",
+        %{
+          "request" => request,
+          "device_token" => device_token,
+          "authorizable_attribute_id" => authorizable_attribute_id
+        },
+        socket
+      ) do
+    case Decode.Encoder.create_stream(request) do
+      {:ok, stream} ->
+        push(socket, "new_stream", %{
+          device_token: device_token,
+          authorizable_attribute_id: authorizable_attribute_id,
+          stream: stream
+        })
+
+      {:error, response} ->
+        push(socket, "error", response)
+    end
+
+    {:noreply, socket}
+  end
 end
