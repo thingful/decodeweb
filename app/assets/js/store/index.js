@@ -16,7 +16,8 @@ import {
   CLEAR_ERROR,
   SAVE_BLINDPROOF,
   SAVE_STREAM,
-  REMOVE_MEMBERSHIP
+  REMOVE_MEMBERSHIP,
+  REMOVE_DEVICE
 } from './mutation-types';
 import {
   LOAD_POLICIES,
@@ -24,7 +25,8 @@ import {
   REQUEST_CREDENTIAL,
   CREATE_BLINDPROOF,
   CREATE_STREAM,
-  DELETE_MEMBERSHIP
+  DELETE_MEMBERSHIP,
+  DELETE_DEVICE
 } from './action-types';
 
 Vue.use(Vuex);
@@ -64,7 +66,6 @@ const store = new Vuex.Store({
 
     [LOGOUT](state) {
       if (state.channel !== null) {
-        console.log('Leaving')
         state.channel.leave();
         state.channel = null;
       }
@@ -142,11 +143,12 @@ const store = new Vuex.Store({
     },
 
     [REMOVE_MEMBERSHIP](state, payload) {
-      console.log('REMOVING MEMBERSHIP');
-      console.log(payload);
-
       let device = state.configuration.devices[payload.device_token];
       Vue.delete(device.memberships, payload.attribute_id);
+    },
+
+    [REMOVE_DEVICE](state, payload) {
+      Vue.delete(state.configuration.devices, payload.device_token);
     }
   },
   actions: {
@@ -204,9 +206,10 @@ const store = new Vuex.Store({
       });
     },
     [DELETE_MEMBERSHIP]({ commit }, payload) {
-      console.log('DELETIING MEMBERSHIP');
-      console.log(payload);
       commit(REMOVE_MEMBERSHIP, payload);
+    },
+    [DELETE_DEVICE]({ commit }, payload) {
+      commit(REMOVE_DEVICE, payload);
     }
   },
   getters: {

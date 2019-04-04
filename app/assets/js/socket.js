@@ -8,23 +8,6 @@
 // from the params if you are not using authentication.
 import { Socket } from "phoenix"
 
-//import Vue from 'vue';
-//
-//export default {
-//  install(Vue, connection, opts) {
-//    let socket = new Socket("/socket", { params: {} });
-//
-//    socket.connect();
-//
-//    let channel = socket.channel("decode:lobby", {})
-//    channel.join()
-//      .receive("ok", resp => { console.log("Joined successfully", resp) })
-//      .receive("error", resp => { console.log("Unable to join", resp) })
-//
-//    Vue.prototype.$socket = socket;
-//  }
-//}
-
 let socket = new Socket("/socket", { params: {} });
 
 // When you connect, you'll often need to authenticate the client.
@@ -71,15 +54,4 @@ let socket = new Socket("/socket", { params: {} });
 // Finally, connect to the socket:
 socket.connect();
 
-// Now that you are connected, you can join channels with a topic:
-//let channel = socket.channel("decode:lobby", {})
-//channel.join()
-//  .receive("ok", resp => { console.log("Joined successfully", resp) })
-//  .receive("error", resp => { console.log("Unable to join", resp) })
-//
-//channel.on('policies_loaded', (payload) => {
-//        let policies = payload.policies;
-//        console.log(policies);
-//        state.policies = policies;
-//      });
 export default socket

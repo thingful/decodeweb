@@ -47,12 +47,7 @@ Scenario 'coconut': "To run after the request keypair is stored (keypair.keys)"
 
 ZEN:run()`
 
-    //console.log("keypair.keys");
-    //console.log(keypair);
-
     let blindSignature = this.exec(script, { keys: keypair });
-    //console.log("blind_signature.req");
-    //console.log(blindSignature);
     return JSON.parse(blindSignature);
   }
 
@@ -70,9 +65,6 @@ Scenario 'coconut': "To run by citizen and store the output as credential.json"
 ]])
 
 ZEN:run()`
-
-    //console.log("ci_signed_credential.json");
-    //console.log(JSON.stringify(ciSignedCredential));
 
     return this.exec(script, { keys: keypair, data: JSON.stringify(ciSignedCredential) });
   }
@@ -93,12 +85,6 @@ Scenario 'coconut': "To run by citizen and send the result blindproof_credential
 ]])
 
 ZEN:run()`
-
-    //console.log("credential.json")
-    //console.log(credential);
-
-    //console.log("ci_verify_keypair.keys")
-    //console.log(ciKeypair);
 
     return this.exec(script, { keys: credential, data: ciKeypair });
   }

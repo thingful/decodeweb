@@ -41,15 +41,8 @@ h2 {
 
 <script>
 import { LOGOUT } from "./store/mutation-types";
-//import socket from "./socket";
 
 export default {
-  mounted() {
-    //let channel = socket.channel('decode:lobby', {});
-    //channel.join()
-    //  .receive('ok', resp => { console.log('Joined successfully', resp)})
-    //  .receive('error', resp => { console.log('Unable to join', resp)});
-  },
   methods: {
     logout() {
       this.$store.commit(LOGOUT);

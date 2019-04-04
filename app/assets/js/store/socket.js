@@ -1,5 +1,20 @@
-import { LOAD_POLICIES, LOAD_AUTHORIZABLE_ATTRIBUTE, REQUEST_CREDENTIAL, CREATE_BLINDPROOF, CREATE_STREAM, DELETE_MEMBERSHIP } from "./action-types";
-import { POLICIES_LOADED, SAVE_AUTHORIZABLE_ATTRIBUTE, SAVE_ERROR, SAVE_STREAM } from "./mutation-types";
+import _ from 'lodash';
+
+import {
+  LOAD_POLICIES,
+  LOAD_AUTHORIZABLE_ATTRIBUTE,
+  REQUEST_CREDENTIAL,
+  CREATE_BLINDPROOF,
+  CREATE_STREAM,
+  DELETE_MEMBERSHIP,
+  DELETE_DEVICE
+} from "./action-types";
+import {
+  POLICIES_LOADED,
+  SAVE_AUTHORIZABLE_ATTRIBUTE,
+  SAVE_ERROR,
+  SAVE_STREAM
+} from "./mutation-types";
 
 export default function createChannelPlugin(socket) {
   let channel = socket.channel('decode:lobby', {})
@@ -27,7 +42,6 @@ export default function createChannelPlugin(socket) {
     });
 
     channel.on('new_stream', (payload) => {
-      console.log(payload);
       store.commit(SAVE_STREAM, payload);
     });
 
@@ -51,6 +65,15 @@ export default function createChannelPlugin(socket) {
 
         case DELETE_MEMBERSHIP:
           channel.push('delete_stream', action.payload.stream);
+          break;
+
+        case DELETE_DEVICE:
+          let device = store.state.configuration.devices[action.payload.device_token];
+          _.forIn(device.memberships, (membership) => {
+            if (membership.stream) {
+              channel.push('delete_stream', membership.stream);
+            }
+          });
           break;
 
         default:

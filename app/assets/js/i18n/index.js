@@ -42,7 +42,9 @@ const messages = {
       deviceMembership: 'Manage Membership',
       deleteMembership: 'Delete Membership',
       confirmation: 'Confirmation',
-      confirmationText: 'Are you sure you want to delete your membership of this community? You will no longer be able to access the community dashboard.'
+      confirmationText: 'Are you sure you want to delete your membership of this community? You will no longer be able to access the community dashboard.',
+      deleteDevice: 'Delete Device',
+      deviceConfirmationText: 'Are you sure you want to delete your device? This will delete all streams and you will no longer be able to access any associated community dashboards.'
     }
   }
 };

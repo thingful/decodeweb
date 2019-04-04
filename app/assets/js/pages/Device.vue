@@ -18,32 +18,44 @@
       </b-list-group-item>
     </b-list-group>
 
-    <b-form>
-      <div class="form-row mt-3">
-        <div class="col">
-          <b-button
-            block
-            variant="primary"
-            :to="{ name: 'choose', params: { id: device.deviceToken }}"
-          >{{ $t('message.chooseCommunity') }}</b-button>
-        </div>
-      </div>
-    </b-form>
+    <b-button
+      block
+      class="mt-3"
+      variant="primary"
+      :to="{ name: 'choose', params: { id: device.deviceToken }}"
+    >{{ $t('message.chooseCommunity') }}</b-button>
+
+    <b-button block variant="danger" v-b-modal.confirm>{{ $t('message.deleteDevice') }}</b-button>
+
+    <b-modal
+      id="confirm"
+      :title="$t('message.confirmation')"
+      centered
+      @ok="onConfirm"
+      ok-variant="danger"
+    >
+      <p>{{ $t('message.deviceConfirmationText') }}</p>
+    </b-modal>
   </div>
 </template>
 
 <script>
-import Octicon from "vue-octicon/components/Octicon.vue";
-
-import "vue-octicon/icons/x";
+import { DELETE_DEVICE } from "../store/action-types";
 
 export default {
-  components: {
-    Octicon
-  },
   computed: {
     device: function() {
       return this.$store.state.configuration.devices[this.$route.params.id];
+    }
+  },
+  methods: {
+    onConfirm() {
+      this.$store.dispatch(DELETE_DEVICE, {
+        device_token: this.$route.params.id
+      });
+      this.$router.replace({
+        name: "devices"
+      });
     }
   }
 };
