@@ -9,6 +9,7 @@ services:
       - ./app:/app
     ports:
       - "4000:4000"
+      - "4001:4001"
     environment:
       - POLICYSTORE_BASE_URL=https://policystore.decodeproject.eu
       - ENCODER_BASE_URL=https://encoder.decodeproject.eu
