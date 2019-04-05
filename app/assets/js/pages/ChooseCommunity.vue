@@ -24,7 +24,7 @@
       class="mt-3"
     >{{ $t('message.noPoliciesAvailable') }}</b-alert>
 
-    <div class="row">
+    <div class="row mt-3">
       <div class="col">
         <b-button
           block
