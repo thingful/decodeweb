@@ -18,14 +18,28 @@
       </b-list-group-item>
     </b-list-group>
 
-    <b-button
-      block
-      class="mt-3"
-      variant="primary"
-      :to="{ name: 'choose', params: { id: device.deviceToken }}"
-    >{{ $t('message.chooseCommunity') }}</b-button>
+    <div class="row mt-3">
+      <div class="col">
+        <b-button
+          block
+          variant="outline-secondary"
+          :to="{ name: 'devices'}"
+        >{{ $t('message.back') }}</b-button>
+      </div>
+      <div class="col">
+        <b-button
+          block
+          variant="primary"
+          :to="{ name: 'choose', params: { id: device.deviceToken }}"
+        >{{ $t('message.chooseCommunity') }}</b-button>
+      </div>
+    </div>
 
-    <b-button block variant="danger" v-b-modal.confirm>{{ $t('message.deleteDevice') }}</b-button>
+    <div class="row mt-2">
+      <div class="col">
+        <b-button block variant="danger" v-b-modal.confirm>{{ $t('message.deleteDevice') }}</b-button>
+      </div>
+    </div>
 
     <b-modal
       id="confirm"

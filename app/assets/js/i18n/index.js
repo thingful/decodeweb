@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueI18n from 'vue-i18n';
+import _ from 'lodash';
 
 Vue.use(VueI18n);
 
@@ -29,7 +30,7 @@ const messages = {
       reset: 'Reset',
       device: 'Device',
       loadPolicies: 'Load Available Policies',
-      choosePolicy: 'Please choose a community policy for your device',
+      choosePolicy: 'Please choose an available community policy for your device',
       memberships: 'Community Memberships',
       findCommunity: 'Find Community',
       chooseCommunity: 'Choose Community',
@@ -39,18 +40,30 @@ const messages = {
       bin: 'Binned Data',
       share: 'Share',
       joinCommunity: 'Join Community',
+      credentialSharing: 'You are going to ask for a credential from an external service. In order to do so, you need to provide the following information:',
       deviceMembership: 'Manage Membership',
       deleteMembership: 'Delete Membership',
       confirmation: 'Confirmation',
       confirmationText: 'Are you sure you want to delete your membership of this community? You will no longer be able to access the community dashboard.',
       deleteDevice: 'Delete Device',
-      deviceConfirmationText: 'Are you sure you want to delete your device? This will delete all streams and you will no longer be able to access any associated community dashboards.'
+      deviceConfirmationText: 'Are you sure you want to delete your device? This will delete all streams and you will no longer be able to access any associated community dashboards.',
+      back: "Back",
+      noPoliciesAvailable: 'No policies available'
     }
   }
 };
 
+const choosableLanguages = _.intersection(Object.keys(messages), navigator.languages);
+var locale;
+
+if (choosableLanguages.length === 0) {
+  locale = "en";
+} else {
+  locale = choosableLanguages[0];
+}
+
 const i18n = new VueI18n({
-  locale: 'en',
+  locale: locale,
   messages,
 });
 

@@ -9,6 +9,8 @@ h2 {
     <h1>{{ $t('message.joinCommunity')}}</h1>
     <h2>{{ policy.label }}</h2>
 
+    <p>{{ $t('message.credentialSharing') }}</p>
+
     <b-alert :show="!!error" variant="danger">{{ error }}</b-alert>
 
     <b-form @submit="onSubmit">

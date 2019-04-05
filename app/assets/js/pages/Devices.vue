@@ -3,7 +3,15 @@
     <h1>{{ $t('message.manageDevices')}}</h1>
 
     <div class="row">
-      <div class="col-sm">
+      <div class="col">
+        <b-button
+          block
+          variant="outline-secondary"
+          class="mt-2"
+          :to="{ name: 'home'}"
+        >{{ $t("message.back") }}</b-button>
+      </div>
+      <div class="col">
         <b-button
           block
           variant="primary"

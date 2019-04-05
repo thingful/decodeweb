@@ -18,38 +18,35 @@
       </div>
     </div>
 
-    <b-button
-      block
-      type="button"
-      variant="danger"
+    <b-alert
+      :show="policyOptions.length === 0"
+      variant="warning"
       class="mt-3"
-      :disabled="!selected || loading"
-      @click="onJoin"
-    >
-      <b-spinner small v-if="loading"></b-spinner>
-      {{ $t("message.joinCommunity") }}
-    </b-button>
+    >{{ $t('message.noPoliciesAvailable') }}</b-alert>
 
-    <b-card :title="policy.label" class="mt-3" v-if="selected">
-      <b-card-text>
-        <p>{{ description }}</p>
-        <h5>{{ $t('message.sensors') }}</h5>
-      </b-card-text>
-      <b-list-group flush v-if="policy.operations.length > 0">
-        <operation
-          :sensorId="op.sensor_id"
-          :action="op.action"
-          :interval="op.interval"
-          :bins="op.bins"
-          v-for="op in policy.operations"
-          v-bind:item="op"
-          v-bind:key="op.sensor_id"
-        />
-      </b-list-group>
-      <b-list-group flush v-else>
-        <b-list-group-item>{{ $t('message.shareAllSensors') }}</b-list-group-item>
-      </b-list-group>
-    </b-card>
+    <div class="row">
+      <div class="col">
+        <b-button
+          block
+          variant="outline-secondary"
+          :to="{ name: 'device', params: { id: device.deviceToken }}"
+        >{{ $t('message.back') }}</b-button>
+      </div>
+      <div class="col">
+        <b-button
+          block
+          type="button"
+          variant="danger"
+          :disabled="!selected || loading"
+          @click="onJoin"
+        >
+          <b-spinner small v-if="loading"></b-spinner>
+          {{ $t("message.joinCommunity") }}
+        </b-button>
+      </div>
+    </div>
+
+    <policy-info :policy="policy" :description="description" :selected="selected"></policy-info>
   </div>
 </template>
 
@@ -58,11 +55,13 @@ import {
   LOAD_POLICIES,
   LOAD_AUTHORIZABLE_ATTRIBUTE
 } from "../store/action-types";
-import operation from "../components/operation.vue";
+
+import policyInfo from "../components/policyInfo.vue";
 
 export default {
   components: {
-    operation
+    //operation
+    policyInfo
   },
   mounted() {
     this.$store.dispatch(LOAD_POLICIES);
@@ -103,9 +102,9 @@ export default {
       return this.$store.state.policies[this.selected];
     },
     description() {
-      return this.$store.state.policies[this.selected].descriptions[
-        this.$i18n.locale
-      ];
+      if (this.policy) {
+        return this.policy.descriptions[this.$i18n.locale];
+      }
     },
     membership() {
       return this.$store.state.configuration.devices[this.$route.params.id]

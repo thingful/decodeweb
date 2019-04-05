@@ -31,7 +31,8 @@
             <b-form-input
               id="longitude"
               v-model="form.longitude"
-              type="text"
+              type="number"
+              step="any"
               required
               :placeholder="$t('message.enterLongitude')"
               :state="longitudeValidation"
@@ -48,7 +49,8 @@
             <b-form-input
               id="latitude"
               v-model="form.latitude"
-              type="text"
+              type="number"
+              step="any"
               required
               :placeholder="$t('message.enterLatitude')"
               :state="latitudeValidation"
@@ -70,6 +72,9 @@
       </div>
 
       <div class="form-row">
+        <div class="col">
+          <b-button variant="outline-secondary" :to="{ name: 'devices' }">{{ $t('message.back') }}</b-button>
+        </div>
         <div class="col">
           <b-button type="submit" variant="primary">{{ $t("message.addDevice") }}</b-button>
           <b-button type="reset" variant="danger">{{ $t("message.reset") }}</b-button>
