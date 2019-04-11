@@ -15,3 +15,6 @@ export const SAVE_STREAM = 'SAVE_STREAM';
 
 export const SAVE_ERROR = 'SAVE_ERROR';
 export const CLEAR_ERROR = 'CLEAR_ERROR';
+
+export const SAVE_PREVIOUS_TO = 'SAVE_PREVIOUS_TO';
+export const CLEAR_PREVIOUS_TO = 'CLEAR_PREVIOUS_TO';

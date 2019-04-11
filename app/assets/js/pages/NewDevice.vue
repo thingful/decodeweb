@@ -103,6 +103,12 @@ export default {
       show: true
     };
   },
+  created() {
+    this.form.deviceToken = this.$route.query.token || "";
+    this.form.longitude = this.$route.query.long || "";
+    this.form.latitude = this.$route.query.lat || "";
+    this.form.exposure = this.$route.query.exposure || "";
+  },
   computed: {
     tokenValidation() {
       return this.form.deviceToken.length > 0;

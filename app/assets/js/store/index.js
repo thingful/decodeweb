@@ -17,7 +17,9 @@ import {
   SAVE_BLINDPROOF,
   SAVE_STREAM,
   REMOVE_MEMBERSHIP,
-  REMOVE_DEVICE
+  REMOVE_DEVICE,
+  SAVE_PREVIOUS_TO,
+  CLEAR_PREVIOUS_TO
 } from './mutation-types';
 import {
   LOAD_POLICIES,
@@ -43,7 +45,8 @@ const store = new Vuex.Store({
       keypair: null,
       devices: {}
     },
-    error: null
+    error: null,
+    previousTo: null
   },
   mutations: {
     [LOGIN](state, payload) {
@@ -69,6 +72,8 @@ const store = new Vuex.Store({
         state.channel.leave();
         state.channel = null;
       }
+
+      state.previousTo = null;
 
       // remove pin from localstorage and state
       localStorage.removeItem('pin');
@@ -149,6 +154,14 @@ const store = new Vuex.Store({
 
     [REMOVE_DEVICE](state, payload) {
       Vue.delete(state.configuration.devices, payload.device_token);
+    },
+
+    [SAVE_PREVIOUS_TO](state, payload) {
+      state.previousTo = payload;
+    },
+
+    [CLEAR_PREVIOUS_TO](state) {
+      state.previousTo = null;
     }
   },
   actions: {

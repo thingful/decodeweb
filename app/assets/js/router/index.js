@@ -1,5 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import _ from 'lodash';
+
 import Login from '../pages/Login.vue';
 import Home from '../pages/Home.vue';
 import Devices from '../pages/Devices.vue';
@@ -8,12 +10,14 @@ import Device from '../pages/Device.vue';
 import ChooseCommunity from '../pages/ChooseCommunity.vue';
 import JoinCommunity from '../pages/JoinCommunity.vue';
 import DeviceMembership from '../pages/DeviceMembership.vue';
+import Onboarding from '../pages/Onboarding.vue';
 
 import store from '../store';
 
 import {
   INITIALIZE_CONFIG,
-  CLEAR_ERROR
+  CLEAR_ERROR,
+  SAVE_PREVIOUS_TO
 } from '../store/mutation-types';
 
 Vue.use(Router);
@@ -69,6 +73,12 @@ const router = new Router({
       name: 'deviceMembership',
       component: DeviceMembership,
       props: true
+    },
+    {
+      path: '/onboarding',
+      name: 'onboarding',
+      component: Onboarding,
+      props: true
     }
   ]
 });
@@ -85,6 +95,8 @@ router.beforeEach((to, from, next) => {
     }
   } else {
     if (to.path !== '/login') {
+      // capture the previous to, then go to login page
+      store.commit(SAVE_PREVIOUS_TO, _.pick(to, ['name', 'params', 'query']));
       next('/login');
     } else {
       next();
