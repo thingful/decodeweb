@@ -104,10 +104,10 @@ export default {
     };
   },
   created() {
-    this.form.deviceToken = this.$route.query.token || "";
-    this.form.longitude = this.$route.query.long || "";
+    this.form.deviceToken = this.$route.query.device_token || "";
+    this.form.longitude = this.$route.query.lng || "";
     this.form.latitude = this.$route.query.lat || "";
-    this.form.exposure = this.$route.query.exposure || "";
+    this.form.exposure = (this.$route.query.exposure || "").toUpperCase();
   },
   computed: {
     tokenValidation() {
