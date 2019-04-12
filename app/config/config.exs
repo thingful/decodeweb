@@ -14,6 +14,8 @@ config :decode, DecodeWeb.Endpoint,
   render_errors: [view: DecodeWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Decode.PubSub, adapter: Phoenix.PubSub.PG2]
 
+config :decode, :policystore_api, Decode.Policystore.Poison
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

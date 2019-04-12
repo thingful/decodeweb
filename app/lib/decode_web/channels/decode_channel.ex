@@ -1,20 +1,20 @@
 defmodule DecodeWeb.DecodeChannel do
   use Phoenix.Channel
 
+  @policystore_api Application.get_env(:decode, :policystore_api)
+
   def join("decode:lobby", _payload, socket) do
     {:ok, socket}
   end
 
   def handle_in("load_policies", _payload, socket) do
-    case Decode.Policystore.list_policies() do
+    case @policystore_api.list_policies() do
       {:ok, policies} ->
-        push(socket, "policies_loaded", policies)
+        {:reply, {:ok, policies}, socket}
 
       {:error, msg} ->
-        push(socket, "error", msg)
+        {:reply, {:error, %{msg: msg}}, socket}
     end
-
-    {:noreply, socket}
   end
 
   def handle_in(

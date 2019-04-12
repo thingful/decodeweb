@@ -1,4 +1,24 @@
 defmodule Decode.Policystore do
+  @moduledoc """
+  This module defines our interface for interacting with the Policystore
+  service. It defines a single public method which queries the Policystore
+  for a list of all currently published policies.
+  """
+
+  @type policy() :: term
+  @type reason() :: String.t()
+
+  @callback list_policies() :: {:ok, [policy]} | {:error, reason}
+end
+
+defmodule Decode.Policystore.Poison do
+  @moduledoc """
+  Our HTTPoison based implementation of the behaviour defined in the
+  Decode.Policystore module.
+  """
+
+  @behaviour Decode.Policystore
+
   use HTTPoison.Base
 
   @default_endpoint "https://policystore.decodeproject.eu"
@@ -33,7 +53,7 @@ defmodule Decode.Policystore do
         {:ok, body}
 
       {:ok, %HTTPoison.Response{body: body}} ->
-        {:error, body}
+        {:error, body["msg"]}
 
       {:error, error} ->
         {:error, error}

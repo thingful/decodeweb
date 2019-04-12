@@ -6,5 +6,7 @@ config :decode, DecodeWeb.Endpoint,
   http: [port: 4002],
   server: false
 
+config :decode, :policystore_api, Decode.Policystore.Mock
+
 # Print only warnings and errors during test
 config :logger, level: :warn
