@@ -40,7 +40,8 @@ defmodule Decode.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:httpoison, "~> 1.4"},
-      {:distillery, "~> 2.0"}
+      {:distillery, "~> 2.0"},
+      {:mox, "~> 0.5", only: :test}
     ]
   end
 end
