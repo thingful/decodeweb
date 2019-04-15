@@ -51,6 +51,8 @@ const messages = {
       back: "Back",
       noPoliciesAvailable: 'No policies available',
       deviceAdditionText: 'Are you sure you wish to add this device into the app? This is required if you wish to be able to control how its data is processed and transmitted',
+      login: 'Login to dashboard',
+      dashboardLogin: 'BCNNow requires a credential to log you in',
       errors: {
         timeout: 'Request timed out'
       }

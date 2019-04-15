@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import _ from 'lodash';
 
-import Login from '../pages/Login.vue';
+import Authenticate from '../pages/Authenticate.vue';
 import Home from '../pages/Home.vue';
 import Devices from '../pages/Devices.vue';
 import NewDevice from '../pages/NewDevice.vue';
@@ -11,6 +11,7 @@ import ChooseCommunity from '../pages/ChooseCommunity.vue';
 import JoinCommunity from '../pages/JoinCommunity.vue';
 import DeviceMembership from '../pages/DeviceMembership.vue';
 import Onboarding from '../pages/Onboarding.vue';
+import Login from '../pages/Login.vue';
 
 import store from '../store';
 
@@ -27,9 +28,9 @@ store.commit(INITIALIZE_CONFIG);
 const router = new Router({
   routes: [
     {
-      path: '/login',
-      name: 'login',
-      component: Login,
+      path: '/auth',
+      name: 'authenticate',
+      component: Authenticate,
       props: true
     },
     {
@@ -79,6 +80,12 @@ const router = new Router({
       name: 'onboarding',
       component: Onboarding,
       props: true
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login,
+      props: true
     }
   ]
 });
@@ -88,16 +95,16 @@ router.beforeEach((to, from, next) => {
   store.commit(CLEAR_ERROR);
 
   if (store.state.pin) {
-    if (to.path === '/login') {
+    if (to.path === '/auth') {
       next('/');
     } else {
       next();
     }
   } else {
-    if (to.path !== '/login') {
+    if (to.path !== '/auth') {
       // capture the previous to, then go to login page
       store.commit(SAVE_PREVIOUS_TO, _.pick(to, ['name', 'params', 'query']));
-      next('/login');
+      next('/auth');
     } else {
       next();
     }
