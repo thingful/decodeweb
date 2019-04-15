@@ -2,7 +2,7 @@
   <div>
     <h1>{{ $t('message.addDevice')}}</h1>
 
-    <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+    <b-form @reset="onReset" v-if="show">
       <div class="form-row">
         <div class="col">
           <b-form-group
@@ -76,11 +76,26 @@
           <b-button variant="outline-secondary" :to="{ name: 'devices' }">{{ $t('message.back') }}</b-button>
         </div>
         <div class="col">
-          <b-button type="submit" variant="primary">{{ $t("message.addDevice") }}</b-button>
+          <b-button
+            type="button"
+            variant="primary"
+            :disabled="allValid"
+            v-b-modal.confirm
+          >{{ $t("message.addDevice") }}</b-button>
           <b-button type="reset" variant="danger">{{ $t("message.reset") }}</b-button>
         </div>
       </div>
     </b-form>
+
+    <b-modal
+      id="confirm"
+      :title="$t('message.confirmation')"
+      centered
+      @ok="onConfirm"
+      ok-variant="danger"
+    >
+      <p>{{ $t('message.deviceAdditionText') }}</p>
+    </b-modal>
   </div>
 </template>
 
@@ -127,10 +142,18 @@ export default {
     },
     exposureValidation() {
       return this.form.exposure !== "";
+    },
+    allValid() {
+      return !(
+        this.tokenValidation &&
+        this.longitudeValidation &&
+        this.latitudeValidation &&
+        this.exposureValidation
+      );
     }
   },
   methods: {
-    onSubmit(evt) {
+    onConfirm(evt) {
       evt.preventDefault();
       this.$store.commit(ADD_DEVICE, {
         deviceToken: this.form.deviceToken,

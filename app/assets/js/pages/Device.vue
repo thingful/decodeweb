@@ -57,15 +57,16 @@
 import { DELETE_DEVICE } from "../store/action-types";
 
 export default {
+  props: ["id"],
   computed: {
     device: function() {
-      return this.$store.state.configuration.devices[this.$route.params.id];
+      return this.$store.state.configuration.devices[this.id];
     }
   },
   methods: {
     onConfirm() {
       this.$store.dispatch(DELETE_DEVICE, {
-        device_token: this.$route.params.id
+        device_token: this.id
       });
       this.$router.replace({
         name: "devices"

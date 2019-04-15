@@ -149,7 +149,7 @@ const store = new Vuex.Store({
 
     [REMOVE_MEMBERSHIP](state, payload) {
       let device = state.configuration.devices[payload.device_token];
-      Vue.delete(device.memberships, payload.attribute_id);
+      Vue.delete(device.memberships, payload.authorizable_attribute_id);
     },
 
     [REMOVE_DEVICE](state, payload) {
@@ -165,13 +165,14 @@ const store = new Vuex.Store({
     }
   },
   actions: {
-    [LOAD_POLICIES]() {
-      // nothing here - used to emit an event via the socket in our plugin
+    [LOAD_POLICIES]({ commit }) {
+      commit(CLEAR_ERROR);
     },
     [LOAD_AUTHORIZABLE_ATTRIBUTE]() {
       // again nothing - used to hook to our socket
     },
     [REQUEST_CREDENTIAL]() {
+      // socket request sent in socket plugin
     },
     [CREATE_STREAM]() { },
     [CREATE_BLINDPROOF]({ state, commit, dispatch }, payload) {
@@ -183,7 +184,7 @@ const store = new Vuex.Store({
       let credential = zenroom.createCredential(
         state.configuration.uuid,
         state.configuration.keypair,
-        payload.ciCredential
+        payload.ci_credential
       );
 
       let blindproofCredential = zenroom.createBlindproofCredential(
@@ -219,7 +220,7 @@ const store = new Vuex.Store({
       });
     },
     [DELETE_MEMBERSHIP]({ commit }, payload) {
-      commit(REMOVE_MEMBERSHIP, payload);
+      // commit(REMOVE_MEMBERSHIP, payload);
     },
     [DELETE_DEVICE]({ commit }, payload) {
       commit(REMOVE_DEVICE, payload);

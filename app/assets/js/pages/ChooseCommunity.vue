@@ -11,18 +11,18 @@
     </div>
     <div class="form-row">
       <div class="col-9">
-        <b-form-select v-model="selected" :options="policyOptions"></b-form-select>
+        <b-form-select v-model="selected" :options="policyOptions">Please select an option</b-form-select>
       </div>
       <div class="col">
-        <b-button variant="outline-primary" @click="onReload">Reload</b-button>
+        <b-button variant="outline-primary" block @click="onReload">{{ $t('message.reload') }}</b-button>
       </div>
     </div>
 
     <b-alert
-      :show="policyOptions.length === 0"
-      variant="warning"
+      :show="!!error"
+      variant="danger"
       class="mt-3"
-    >{{ $t('message.noPoliciesAvailable') }}</b-alert>
+    >{{ $t('message.noPoliciesAvailable') }} - {{ error }}</b-alert>
 
     <div class="row mt-3">
       <div class="col">
@@ -57,10 +57,10 @@ import {
 } from "../store/action-types";
 
 import policyInfo from "../components/policyInfo.vue";
+import { CLEAR_ERROR } from "../store/mutation-types";
 
 export default {
   components: {
-    //operation
     policyInfo
   },
   mounted() {
@@ -87,6 +87,9 @@ export default {
   computed: {
     device() {
       return this.$store.state.configuration.devices[this.$route.params.id];
+    },
+    error() {
+      return this.$store.state.error;
     },
     policyOptions() {
       // we attempt to filter out any communities we are already a member of

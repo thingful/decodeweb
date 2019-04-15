@@ -29,6 +29,7 @@ const messages = {
       outdoors: 'Outdoors',
       reset: 'Reset',
       device: 'Device',
+      reload: 'Reload',
       loadPolicies: 'Load Available Policies',
       choosePolicy: 'Please choose an available community policy for your device',
       memberships: 'Community Memberships',
@@ -48,7 +49,11 @@ const messages = {
       deleteDevice: 'Delete Device',
       deviceConfirmationText: 'Are you sure you want to delete your device? This will delete all streams and you will no longer be able to access any associated community dashboards.',
       back: "Back",
-      noPoliciesAvailable: 'No policies available'
+      noPoliciesAvailable: 'No policies available',
+      deviceAdditionText: 'Are you sure you wish to add this device into the app? This is required if you wish to be able to control how its data is processed and transmitted',
+      errors: {
+        timeout: 'Request timed out'
+      }
     }
   }
 };

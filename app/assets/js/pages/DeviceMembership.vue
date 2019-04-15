@@ -48,6 +48,7 @@ import { DELETE_MEMBERSHIP } from "../store/action-types";
 import policyInfo from "../components/policyInfo.vue";
 
 export default {
+  props: ["id", "attribute_id"],
   components: {
     policyInfo
   },
@@ -58,10 +59,10 @@ export default {
   },
   computed: {
     device() {
-      return this.$store.state.configuration.devices[this.$route.params.id];
+      return this.$store.state.configuration.devices[this.id];
     },
     membership() {
-      return this.device.memberships[this.$route.params.attribute_id];
+      return this.device.memberships[this.attribute_id];
     },
     policy() {
       return this.membership.policy;
@@ -75,14 +76,14 @@ export default {
       let stream = this.membership.stream;
 
       this.$store.dispatch(DELETE_MEMBERSHIP, {
-        device_token: this.$route.params.id,
-        attribute_id: this.$route.params.attribute_id,
+        device_token: this.id,
+        authorizable_attribute_id: this.attribute_id,
         stream: stream
       });
 
       this.$router.replace({
         name: "device",
-        params: { id: this.$route.params.id }
+        params: { id: this.id }
       });
     }
   }
