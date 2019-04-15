@@ -57,7 +57,7 @@ bootstrap: clean build ## Bootstrap local dev environment
 
 .PHONY: test
 test: ## run the elixir tests of the phoenix app
-	@docker-compose run --rm app mix test
+	@docker-compose run --rm app mix coveralls.html
 
 .PHONY: dist
 dist: ## Build a distillery release
