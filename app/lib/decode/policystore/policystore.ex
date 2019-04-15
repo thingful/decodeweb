@@ -5,10 +5,10 @@ defmodule Decode.Policystore do
   for a list of all currently published policies.
   """
 
-  @type policy() :: term
-  @type reason() :: String.t()
+  @type response() :: term
+  @type reason() :: term
 
-  @callback list_policies() :: {:ok, [policy]} | {:error, reason}
+  @callback list_policies() :: {:ok, response} | {:error, reason}
 end
 
 defmodule Decode.Policystore.Poison do
@@ -53,7 +53,7 @@ defmodule Decode.Policystore.Poison do
         {:ok, body}
 
       {:ok, %HTTPoison.Response{body: body}} ->
-        {:error, body["msg"]}
+        {:error, body}
 
       {:error, error} ->
         {:error, error}

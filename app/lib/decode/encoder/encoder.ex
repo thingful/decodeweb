@@ -1,4 +1,30 @@
 defmodule Decode.Encoder do
+  @moduledoc """
+  This module defines our interface for interacting with the Encoder service.
+  We expose two methods which allow callers to create or delete encrypted
+  streams.
+  """
+  @type create_stream_request() :: term
+  @type create_stream_response() :: term
+
+  @type delete_stream_request() :: term
+  @type delete_stream_response() :: term
+  @type reason() :: term
+
+  @callback create_stream(create_stream_request) ::
+              {:ok, create_stream_response} | {:error, reason}
+  @callback delete_stream(delete_stream_request) ::
+              {:ok, delete_stream_response} | {:error, reason}
+end
+
+defmodule Decode.Encoder.Poison do
+  @moduledoc """
+  Our HTTPoison based implementation of the behaviour defined in the
+  Decode.Encoder module.
+  """
+
+  @behaviour Decode.Encoder
+
   use HTTPoison.Base
 
   @default_endpoint "https://encoder.decodeproject.eu"

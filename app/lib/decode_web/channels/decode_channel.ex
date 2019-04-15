@@ -2,21 +2,32 @@ defmodule DecodeWeb.DecodeChannel do
   use Phoenix.Channel
 
   @policystore_api Application.get_env(:decode, :policystore_api)
+  @credentials_api Application.get_env(:decode, :credentials_api)
+  @encoder_api Application.get_env(:decode, :encoder_api)
 
   def join("decode:lobby", _payload, socket) do
     {:ok, socket}
   end
 
+  @doc """
+  Receive a load_policies message, send a request to the policystore to
+  obtain policies, then return them to the caller synchronously.
+  """
   def handle_in("load_policies", _payload, socket) do
     case @policystore_api.list_policies() do
-      {:ok, policies} ->
-        {:reply, {:ok, policies}, socket}
+      {:ok, payload} ->
+        {:reply, {:ok, payload}, socket}
 
-      {:error, msg} ->
-        {:reply, {:error, %{msg: msg}}, socket}
+      {:error, response} ->
+        {:reply, {:error, response}, socket}
     end
   end
 
+  @doc """
+  Receive a load authorizable attribute message, including the id and a
+  device token. Attempt to fetch the authorizable attribute from the
+  credentials store, then return the retrieved authorizable attribute.
+  """
   def handle_in(
         "load_authorizable_attribute",
         %{
@@ -25,38 +36,38 @@ defmodule DecodeWeb.DecodeChannel do
         },
         socket
       ) do
-    case Decode.Credentials.get_authorizable_attribute(authorizable_attribute_id) do
+    case @credentials_api.get_authorizable_attribute(authorizable_attribute_id) do
       {:ok, authorizable_attribute} ->
-        push(socket, "authorizable_attribute_loaded", %{
-          device_token: device_token,
-          authorizable_attribute: authorizable_attribute
-        })
+        {:reply,
+         {:ok, %{device_token: device_token, authorizable_attribute: authorizable_attribute}},
+         socket}
 
       {:error, msg} ->
-        push(socket, "error", %{"error" => msg})
+        {:reply, {:error, msg}, socket}
     end
-
-    {:noreply, socket}
   end
 
+  @doc """
+  Handle credential request message
+  """
   def handle_in(
         "request_credential",
         %{"device_token" => device_token, "credential_request" => credential_request},
         socket
       ) do
-    case Decode.Credentials.obtain_credential(credential_request) do
+    case @credentials_api.obtain_credential(credential_request) do
       {:ok, credential} ->
-        push(socket, "credential", %{
-          device_token: device_token,
-          authorizable_attribute_id: credential_request["authorizable_attribute_id"],
-          ciCredential: credential
-        })
+        {:reply,
+         {:ok,
+          %{
+            device_token: device_token,
+            authorizable_attribute_id: credential_request["authorizable_attribute_id"],
+            ci_credential: credential
+          }}, socket}
 
       {:error, msg} ->
-        push(socket, "error", %{"error" => msg})
+        {:reply, {:error, msg}, socket}
     end
-
-    {:noreply, socket}
   end
 
   @doc """
@@ -71,30 +82,44 @@ defmodule DecodeWeb.DecodeChannel do
         },
         socket
       ) do
-    case Decode.Encoder.create_stream(request) do
+    case @encoder_api.create_stream(request) do
       {:ok, stream} ->
-        push(socket, "new_stream", %{
-          device_token: device_token,
-          authorizable_attribute_id: authorizable_attribute_id,
-          stream: stream
-        })
+        {:reply,
+         {:ok,
+          %{
+            device_token: device_token,
+            authorizable_attribute_id: authorizable_attribute_id,
+            stream: stream
+          }}, socket}
 
       {:error, response} ->
-        push(socket, "error", response)
+        {:reply, {:error, response}, socket}
     end
-
-    {:noreply, socket}
   end
 
-  def handle_in("delete_stream", request, socket) do
-    case Decode.Encoder.delete_stream(request) do
+  @doc """
+  Handle stream deletion message
+  """
+  def handle_in(
+        "delete_stream",
+        %{
+          "stream" => stream,
+          "device_token" => device_token,
+          "authorizable_attribute_id" => authorizable_attribute_id
+        },
+        socket
+      ) do
+    case @encoder_api.delete_stream(stream) do
       {:ok, _} ->
-        push(socket, "stream_deleted", %{})
+        {:reply,
+         {:ok,
+          %{
+            device_token: device_token,
+            authorizable_attribute_id: authorizable_attribute_id
+          }}, socket}
 
       {:error, msg} ->
-        push(socket, "error", msg)
+        {:reply, {:error, msg}, socket}
     end
-
-    {:noreply, socket}
   end
 end

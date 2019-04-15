@@ -15,6 +15,8 @@ config :decode, DecodeWeb.Endpoint,
   pubsub: [name: Decode.PubSub, adapter: Phoenix.PubSub.PG2]
 
 config :decode, :policystore_api, Decode.Policystore.Poison
+config :decode, :credentials_api, Decode.Credentials.Poison
+config :decode, :encoder_api, Decode.Encoder.Poison
 
 # Configures Elixir's Logger
 config :logger, :console,
