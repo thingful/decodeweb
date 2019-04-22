@@ -60,10 +60,11 @@ import policyInfo from "../components/policyInfo.vue";
 import { CLEAR_ERROR } from "../store/mutation-types";
 
 export default {
+  props: ["id"],
   components: {
     policyInfo
   },
-  mounted() {
+  created() {
     this.$store.dispatch(LOAD_POLICIES);
   },
   data() {
@@ -78,7 +79,7 @@ export default {
     },
     onJoin() {
       this.$store.dispatch(LOAD_AUTHORIZABLE_ATTRIBUTE, {
-        device_token: this.$route.params.id,
+        device_token: this.id,
         authorizable_attribute_id: this.selected
       });
       this.loading = true;
@@ -86,16 +87,15 @@ export default {
   },
   computed: {
     device() {
-      return this.$store.state.configuration.devices[this.$route.params.id];
+      return this.$store.state.configuration.devices[this.id];
     },
     error() {
       return this.$store.state.error;
     },
     policyOptions() {
       // we attempt to filter out any communities we are already a member of
-      let memberships = this.$store.state.configuration.devices[
-        this.$route.params.id
-      ].memberships;
+      let memberships = this.$store.state.configuration.devices[this.id]
+        .memberships;
 
       return this.$store.getters.policyOptions.filter(opt => {
         return !memberships[opt.value];
@@ -109,17 +109,28 @@ export default {
         return this.policy.descriptions[this.$i18n.locale];
       }
     },
+    pendingMembership() {
+      return this.$store.state.configuration.pending_memberships[this.selected];
+    },
     membership() {
-      return this.$store.state.configuration.devices[this.$route.params.id]
-        .memberships[this.selected];
+      return this.device.memberships[this.selected];
     }
   },
   watch: {
-    membership: function(newMembership, oldMembership) {
+    pendingMembership: function(newPendingMembership, oldPendingMembership) {
       // TODO: maybe do something else if we don't get a membership info properly
       this.$router.replace({
         name: "join",
-        params: { id: this.$route.params.id, attribute_id: this.selected }
+        params: { id: this.id, attribute_id: this.selected }
+      });
+    },
+    // watch membership, and if it appears (because we already have a valid
+    // credential for the community), then redirect to the device page because
+    // we don't need to do any more work.
+    membership: function(newMembership, oldMembership) {
+      this.$router.replace({
+        name: "device",
+        params: { id: this.id }
       });
     }
   }

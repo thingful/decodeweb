@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { LOGIN, CLEAR_PREVIOUS_TO } from "../store/mutation-types";
+import { AUTHENTICATE, CLEAR_PREVIOUS_TO } from "../store/mutation-types";
 import zenroom from "../zenroom";
 
 export default {
@@ -52,7 +52,7 @@ export default {
   methods: {
     onSubmit(evt) {
       evt.preventDefault();
-      this.$store.commit(LOGIN, { pin: this.pin });
+      this.$store.commit(AUTHENTICATE, { pin: this.pin });
 
       if (this.$store.state.previousTo) {
         this.$router.replace(this.$store.state.previousTo);

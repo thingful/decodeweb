@@ -37,6 +37,7 @@ import { REQUEST_CREDENTIAL } from "../store/action-types";
 import { CLEAR_ERROR } from "../store/mutation-types";
 
 export default {
+  props: ["id", "attribute_id"],
   data() {
     return {
       authorizableAttributeInfo: [],
@@ -44,10 +45,9 @@ export default {
     };
   },
   mounted() {
-    let attributeInfo = this.$store.state.configuration.devices[
-      this.$route.params.id
-    ].memberships[this.$route.params.attribute_id].authorizable_attribute
-      .authorizable_attribute_info;
+    let attributeInfo = this.$store.state.configuration.pending_memberships[
+      this.attribute_id
+    ].authorizable_attribute.authorizable_attribute_info;
 
     attributeInfo.forEach(info => {
       let key = Object.keys(info)[0];
@@ -68,28 +68,30 @@ export default {
   },
   computed: {
     device() {
-      return this.$store.state.configuration.devices[this.$route.params.id];
+      return this.$store.state.configuration.devices[this.id];
     },
     policy() {
-      return this.$store.state.configuration.devices[this.$route.params.id]
-        .memberships[this.$route.params.attribute_id].policy;
+      let membership =
+        this.$store.state.configuration.pending_memberships[
+          this.attribute_id
+        ] || this.$store.state.configuration.memberships[this.attribute_id];
+      return membership.policy;
     },
     error() {
       return this.$store.state.error;
     },
-    stream() {
-      return this.$store.state.configuration.devices[this.$route.params.id]
-        .memberships[this.$route.params.attribute_id].stream;
+    membership() {
+      return this.device.memberships[this.attribute_id];
     }
   },
   watch: {
     error: function(newErr, oldErr) {
       this.loading = false;
     },
-    stream: function(newStream, oldStream) {
+    membership: function(newStream, oldStream) {
       this.$router.replace({
         name: "device",
-        params: { id: this.$route.params.id }
+        params: { id: this.id }
       });
     }
   },
@@ -99,16 +101,15 @@ export default {
 
       // build our request to obtain a credential, and dispatch to the backend
       // where it will be sent to the credentials issuer
-      let attributeId = this.$route.params.attribute_id,
-        blindRequest = this.$store.state.configuration.devices[
-          this.$route.params.id
-        ].memberships[attributeId].blind_signature,
+      let blindRequest = this.$store.state.configuration.pending_memberships[
+          this.attribute_id
+        ].blind_signature,
         values = this.authorizableAttributeInfo.map(i => {
           return { name: i.id, value: i.value };
         });
 
       let credentialRequest = {
-        authorizable_attribute_id: attributeId,
+        authorizable_attribute_id: this.attribute_id,
         blind_sign_request: blindRequest,
         values: values,
         optional_values: []

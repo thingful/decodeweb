@@ -64,7 +64,7 @@ export default {
   methods: {
     logout() {
       this.$store.commit(LOGOUT);
-      this.$router.replace({ name: "login" });
+      this.$router.replace({ name: "authenticate" });
     },
     onLang(evt) {
       this.$i18n.locale = evt.currentTarget.dataset.value;

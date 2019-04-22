@@ -62,23 +62,24 @@ export default {
       return this.$store.state.configuration.devices[this.id];
     },
     membership() {
-      return this.device.memberships[this.attribute_id];
+      return this.$store.state.configuration.memberships[this.attribute_id];
     },
     policy() {
       return this.membership.policy;
     },
     description() {
       return this.policy.descriptions[this.$i18n.locale];
+    },
+    stream() {
+      return this.device.memberships[this.attribute_id].stream;
     }
   },
   methods: {
     onConfirm() {
-      let stream = this.membership.stream;
-
       this.$store.dispatch(DELETE_MEMBERSHIP, {
         device_token: this.id,
         authorizable_attribute_id: this.attribute_id,
-        stream: stream
+        stream: this.stream
       });
 
       this.$router.replace({

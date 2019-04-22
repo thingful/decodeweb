@@ -1,4 +1,4 @@
-export const LOGIN = 'LOGIN';
+export const AUTHENTICATE = 'AUTHENTICATE';
 export const LOGOUT = 'LOGOUT';
 
 export const INITIALIZE_CONFIG = 'INITIALIZE_CONFIG';
