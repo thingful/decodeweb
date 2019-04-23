@@ -24,6 +24,10 @@ defmodule Decode.Dashboard.Poison do
     [{"content-type", "application/json"} | headers]
   end
 
+  def process_request_options(options) do
+    Keyword.put(options, :recv_timeout, 30_000)
+  end
+
   def process_request_body(body) do
     body
     |> Jason.encode!()
@@ -43,11 +47,11 @@ defmodule Decode.Dashboard.Poison do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         {:ok, body}
 
-      {:ok, %HTTPoison.Response{body: body}} ->
+      {:ok, %HTTPoison.Response{body: body} = response} ->
         {:error, body}
 
-      {:error, error} ->
-        {:error, error}
+      {:error, %HTTPoison.Error{reason: reason}} ->
+        {:error, %{message: reason}}
     end
   end
 end
