@@ -4,6 +4,7 @@ defmodule DecodeWeb.DecodeChannel do
   @policystore_api Application.get_env(:decode, :policystore_api)
   @credentials_api Application.get_env(:decode, :credentials_api)
   @encoder_api Application.get_env(:decode, :encoder_api)
+  @dashboard_api Application.get_env(:decode, :dashboard_api)
 
   def join("decode:lobby", _payload, socket) do
     {:ok, socket}
@@ -117,6 +118,19 @@ defmodule DecodeWeb.DecodeChannel do
             device_token: device_token,
             authorizable_attribute_id: authorizable_attribute_id
           }}, socket}
+
+      {:error, msg} ->
+        {:reply, {:error, msg}, socket}
+    end
+  end
+
+  @doc """
+  Handle dashboard login message
+  """
+  def handle_in("dashboard_login", %{"callback" => callback, "request" => request}, socket) do
+    case @dashboard_api.login(callback, request) do
+      {:ok, body} ->
+        {:reply, {:ok, body}, socket}
 
       {:error, msg} ->
         {:reply, {:error, msg}, socket}

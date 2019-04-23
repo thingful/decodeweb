@@ -17,6 +17,7 @@ config :decode, DecodeWeb.Endpoint,
 config :decode, :policystore_api, Decode.Policystore.Poison
 config :decode, :credentials_api, Decode.Credentials.Poison
 config :decode, :encoder_api, Decode.Encoder.Poison
+config :decode, :dashboard_api, Decode.Dashboard.Poison
 
 # Configures Elixir's Logger
 config :logger, :console,

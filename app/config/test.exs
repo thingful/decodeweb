@@ -9,6 +9,7 @@ config :decode, DecodeWeb.Endpoint,
 config :decode, :policystore_api, Decode.Policystore.Mock
 config :decode, :credentials_api, Decode.Credentials.Mock
 config :decode, :encoder_api, Decode.Encoder.Mock
+config :decode, :dashboard_api, Decode.Dashboard.Mock
 
 # Print only warnings and errors during test
 config :logger, level: :warn
