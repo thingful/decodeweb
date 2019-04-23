@@ -12,13 +12,15 @@ import JoinCommunity from '../pages/JoinCommunity.vue';
 import DeviceMembership from '../pages/DeviceMembership.vue';
 import Onboarding from '../pages/Onboarding.vue';
 import Login from '../pages/Login.vue';
+import Reset from '../pages/Reset.vue';
 
 import store from '../store';
 
 import {
   INITIALIZE_CONFIG,
   CLEAR_ERROR,
-  SAVE_PREVIOUS_TO
+  SAVE_PREVIOUS_TO,
+  RESET
 } from '../store/mutation-types';
 
 Vue.use(Router);
@@ -85,6 +87,12 @@ const router = new Router({
       path: '/login',
       name: 'login',
       component: Login,
+      props: true
+    },
+    {
+      path: '/reset',
+      name: 'reset',
+      component: Reset,
       props: true
     }
   ]

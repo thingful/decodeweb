@@ -20,7 +20,8 @@ import {
   REMOVE_DEVICE,
   SAVE_PREVIOUS_TO,
   CLEAR_PREVIOUS_TO,
-  LOGGED_IN
+  LOGGED_IN,
+  RESET
 } from './mutation-types';
 import {
   LOAD_POLICIES,
@@ -37,8 +38,8 @@ Vue.use(Vuex);
 
 const plugin = socketPlugin(socket);
 
-const store = new Vuex.Store({
-  state: {
+const defaultState = () => {
+  return {
     pin: null,
     channel: null,
     policies: {},
@@ -52,7 +53,11 @@ const store = new Vuex.Store({
     error: null,
     previousTo: null,
     loggedIn: false
-  },
+  };
+};
+
+const store = new Vuex.Store({
+  state: defaultState(),
   mutations: {
     [AUTHENTICATE](state, payload) {
       // save pin into localstorage and vuex state
@@ -75,7 +80,6 @@ const store = new Vuex.Store({
           pending_memberships: {}
         });
       }
-
     },
 
     [LOGOUT](state) {
@@ -170,6 +174,12 @@ const store = new Vuex.Store({
 
     [LOGGED_IN](state) {
       state.loggedIn = true;
+    },
+
+    [RESET](state) {
+      localStorage.removeItem(state.pin);
+      localStorage.removeItem('pin');
+      Object.assign(state, defaultState());
     }
   },
   actions: {

@@ -47,7 +47,7 @@ defmodule Decode.Dashboard.Poison do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         {:ok, body}
 
-      {:ok, %HTTPoison.Response{body: body} = response} ->
+      {:ok, %HTTPoison.Response{body: body}} ->
         {:error, body}
 
       {:error, %HTTPoison.Error{reason: reason}} ->
