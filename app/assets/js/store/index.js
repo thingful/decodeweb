@@ -19,7 +19,8 @@ import {
   REMOVE_MEMBERSHIP,
   REMOVE_DEVICE,
   SAVE_PREVIOUS_TO,
-  CLEAR_PREVIOUS_TO
+  CLEAR_PREVIOUS_TO,
+  LOGGED_IN
 } from './mutation-types';
 import {
   LOAD_POLICIES,
@@ -28,7 +29,8 @@ import {
   CREATE_BLINDPROOF,
   CREATE_STREAM,
   DELETE_MEMBERSHIP,
-  DELETE_DEVICE
+  DELETE_DEVICE,
+  LOGIN
 } from './action-types';
 
 Vue.use(Vuex);
@@ -48,7 +50,8 @@ const store = new Vuex.Store({
       pending_memberships: {}
     },
     error: null,
-    previousTo: null
+    previousTo: null,
+    loggedIn: false
   },
   mutations: {
     [AUTHENTICATE](state, payload) {
@@ -163,6 +166,10 @@ const store = new Vuex.Store({
 
     [CLEAR_PREVIOUS_TO](state) {
       state.previousTo = null;
+    },
+
+    [LOGGED_IN](state) {
+      state.loggedIn = true;
     }
   },
   actions: {
@@ -225,7 +232,8 @@ const store = new Vuex.Store({
     },
     [DELETE_DEVICE]({ commit }, payload) {
       commit(REMOVE_DEVICE, payload);
-    }
+    },
+    [LOGIN]() { }
   },
   getters: {
     policyOptions(state) {
