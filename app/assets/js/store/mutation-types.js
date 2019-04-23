@@ -1,4 +1,4 @@
-export const LOGIN = 'LOGIN';
+export const AUTHENTICATE = 'AUTHENTICATE';
 export const LOGOUT = 'LOGOUT';
 
 export const INITIALIZE_CONFIG = 'INITIALIZE_CONFIG';
@@ -18,3 +18,5 @@ export const CLEAR_ERROR = 'CLEAR_ERROR';
 
 export const SAVE_PREVIOUS_TO = 'SAVE_PREVIOUS_TO';
 export const CLEAR_PREVIOUS_TO = 'CLEAR_PREVIOUS_TO';
+export const LOGGED_IN = 'LOGGED_IN';
+export const RESET = 'RESET';

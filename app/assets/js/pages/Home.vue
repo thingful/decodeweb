@@ -22,7 +22,7 @@ export default {
   methods: {
     logout() {
       this.$store.commit(LOGOUT);
-      this.$router.replace({ name: "login" });
+      this.$router.replace({ name: "authenticate" });
     }
   }
 };

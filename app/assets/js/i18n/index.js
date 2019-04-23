@@ -51,8 +51,17 @@ const messages = {
       back: "Back",
       noPoliciesAvailable: 'No policies available',
       deviceAdditionText: 'Are you sure you wish to add this device into the app? This is required if you wish to be able to control how its data is processed and transmitted',
+      login: 'Login to dashboard',
+      doLogin: 'Login',
+      dashboardLogin: 'BCNNow requires a credential to log you in',
+      shareCredential: 'Please choose a credential to share with the dashboard',
+      selectCredential: 'Please select a credential',
+      successfulLogin: 'Successfully logged in',
+      resetText: 'Resetting your application means all device and community membership configuration details will be deleted and will not be able to be recovered. You should only do this if instructed to by a workshop leader.',
+      resetConfirmationText: 'Are you sure you want to reset your app? This will remove all device configuration and community membership details.',
       errors: {
-        timeout: 'Request timed out'
+        timeout: 'Request timed out',
+        missingLoginParams: 'Missing required login parameters, please return to the dashboard and try logging in again.'
       }
     }
   }

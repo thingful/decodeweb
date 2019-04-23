@@ -1,65 +1,107 @@
-<style scoped>
-.password {
-  -webkit-text-security: disc;
-}
-</style>
-
 <template>
   <div>
-    <div class="row align-items-end full-height">
-      <div class="col">
-        <b-form @submit="onSubmit">
-          <b-form-group
-            id="pin-group"
-            :label="$t('message.pin')+':'"
-            label-for="pin"
-            :description="$t('message.enterPin')"
-          >
-            <b-form-input
-              id="pin"
-              v-model="pin"
-              type="number"
-              class="password"
-              required
-              :placeholder="$t('message.pin')"
-              :state="validation"
-            ></b-form-input>
-            <b-form-invalid-feedback :state="validation">{{ $t("message.pinValidation") }}</b-form-invalid-feedback>
-          </b-form-group>
+    <h1>{{ $t('message.login') }}</h1>
+    <p>{{ $t('message.dashboardLogin') }}</p>
 
-          <b-button block type="submit" variant="primary">{{ $t("message.signIn") }}</b-button>
-        </b-form>
-      </div>
-    </div>
+    <template v-if="loggedIn">
+      <b-alert show variant="success">{{ $t('message.successfulLogin') }}</b-alert>
+    </template>
+    <template v-else>
+      <template v-if="hasRequiredParams">
+        <p>{{ $t('message.shareCredential') }}</p>
+
+        <b-alert :show="error !== null" variant="danger">{{ error }}</b-alert>
+
+        <div class="row mb-2">
+          <div class="col">
+            <b-form-select v-model="form.authorizable_attribute_id" :options="credentials"></b-form-select>
+          </div>
+        </div>
+
+        <b-button
+          block
+          type="submit"
+          :disabled="form.authorizable_attribute_id === null"
+          variant="danger"
+          @click="onLogin"
+        >
+          <b-spinner small v-if="loading"></b-spinner>
+          {{ $t("message.doLogin") }}
+        </b-button>
+      </template>
+      <template v-else>
+        <b-alert show variant="danger">{{ $t('message.errors.missingLoginParams') }}</b-alert>
+      </template>
+    </template>
   </div>
 </template>
 
 <script>
-import { LOGIN, CLEAR_PREVIOUS_TO } from "../store/mutation-types";
-import zenroom from "../zenroom";
+import _ from "lodash";
+import { LOGIN } from "../store/action-types";
+import { CLEAR_ERROR } from "../store/mutation-types";
 
 export default {
   data() {
     return {
-      pin: ""
+      form: {
+        sessionId: "",
+        callback: "",
+        authorizable_attribute_id: null
+      },
+      loading: false
     };
   },
+  created() {
+    this.form.sessionId = this.$route.query.sessionId || "";
+    this.form.callback = this.$route.query.callback || "";
+  },
   computed: {
-    validation() {
-      return this.pin.length >= 4;
+    error: function() {
+      return this.$store.state.error;
+    },
+    loggedIn: function() {
+      return this.$store.state.loggedIn;
+    },
+    credentials: function() {
+      let credentials = _(this.$store.state.configuration.memberships)
+        .map(m => {
+          return {
+            value: m.authorizable_attribute.authorizable_attribute_id,
+            text: m.policy.label
+          };
+        })
+        .sort(m => m.text)
+        .value();
+
+      credentials.unshift({
+        value: null,
+        text: this.$t("message.selectCredential")
+      });
+
+      return credentials;
+    }
+  },
+  watch: {
+    error: function(newErr, oldErr) {
+      this.loading = false;
+    },
+    loggedIn: function(newLoggedIn, oldLoggedIn) {
+      this.loading = false;
     }
   },
   methods: {
-    onSubmit(evt) {
-      evt.preventDefault();
-      this.$store.commit(LOGIN, { pin: this.pin });
-
-      if (this.$store.state.previousTo) {
-        this.$router.replace(this.$store.state.previousTo);
-        this.$store.commit(CLEAR_PREVIOUS_TO);
-      } else {
-        this.$router.replace({ name: "home" });
-      }
+    onLogin() {
+      this.loading = true;
+      this.$store.commit(CLEAR_ERROR);
+      this.$store.dispatch(LOGIN, {
+        sessionId: this.form.sessionId,
+        callback: this.form.callback,
+        authorizable_attribute_id: this.form.authorizable_attribute_id
+      });
+    },
+    hasRequiredParams() {
+      return !_.isEmpty(this.form.sessionId) && !_.isEmpty(this.form.callback);
     }
   }
 };

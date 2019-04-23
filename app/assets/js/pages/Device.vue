@@ -9,7 +9,7 @@
 
     <b-list-group>
       <b-list-group-item
-        v-for="membership in device.memberships"
+        v-for="membership in memberships"
         v-bind:key="membership.authorizable_attribute.authorizable_attribute_id"
       >
         <b-link
@@ -55,12 +55,19 @@
 
 <script>
 import { DELETE_DEVICE } from "../store/action-types";
+import _ from "lodash";
 
 export default {
   props: ["id"],
   computed: {
     device: function() {
       return this.$store.state.configuration.devices[this.id];
+    },
+    memberships: function() {
+      return _.pick(
+        this.$store.state.configuration.memberships,
+        _.keys(this.device.memberships)
+      );
     }
   },
   methods: {

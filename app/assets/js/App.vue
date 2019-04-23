@@ -28,6 +28,7 @@ h2 {
         <b-navbar-nav v-if="pin">
           <b-nav-item :to="{name: 'home'}">{{ $t('message.home') }}</b-nav-item>
           <b-nav-item :to="{name: 'devices'}">{{ $t('message.manageDevices') }}</b-nav-item>
+          <b-nav-item :to="{name: 'reset'}">{{ $t('message.reset') }}</b-nav-item>
           <b-nav-item @click="logout">Logout</b-nav-item>
         </b-navbar-nav>
 
@@ -64,7 +65,7 @@ export default {
   methods: {
     logout() {
       this.$store.commit(LOGOUT);
-      this.$router.replace({ name: "login" });
+      this.$router.replace({ name: "authenticate" });
     },
     onLang(evt) {
       this.$i18n.locale = evt.currentTarget.dataset.value;

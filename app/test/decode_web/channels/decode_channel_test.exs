@@ -153,4 +153,46 @@ defmodule DecodeWeb.DecodeChannelTest do
 
     assert_reply(ref, :error, %{msg: "error"})
   end
+
+  test "login successfully", %{socket: socket} do
+    Decode.Dashboard.Mock
+    |> expect(:login, fn _callback, _request -> {:ok, %{message: "OK"}} end)
+
+    ref =
+      push(socket, "dashboard_login", %{
+        "callback" => "http://dashboard.com",
+        "request" => %{
+          "sessionId" => "foobar",
+          "credential" => %{
+            "authorizable_attribute_id" => "abc123",
+            "credential_issuer_endpoint_address" => "http://credential.decodeproject.eu",
+            "value" => %{}
+          },
+          "optionalAttributes" => []
+        }
+      })
+
+    assert_reply(ref, :ok, %{message: "OK"})
+  end
+
+  test "login failure", %{socket: socket} do
+    Decode.Dashboard.Mock
+    |> expect(:login, fn _callback, _request -> {:error, %{message: "Invalid token"}} end)
+
+    ref =
+      push(socket, "dashboard_login", %{
+        "callback" => "http://dashboard.com",
+        "request" => %{
+          "sessionId" => "foobar",
+          "credential" => %{
+            "authorizable_attribute_id" => "abc123",
+            "credential_issuer_endpoint_address" => "http://credential.decodeproject.eu",
+            "value" => %{}
+          },
+          "optionalAttributes" => []
+        }
+      })
+
+    assert_reply(ref, :error, %{message: "Invalid token"})
+  end
 end
