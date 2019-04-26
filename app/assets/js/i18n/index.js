@@ -24,7 +24,6 @@ const messages = {
       latitude: 'Latitude',
       enterLatitude: 'e.g. 41.39',
       exposure: 'Exposure',
-      enterExposure: 'Enter the exposure of the device',
       indoors: 'Indoors',
       outdoors: 'Outdoors',
       reset: 'Reset',
