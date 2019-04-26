@@ -7,3 +7,4 @@ export const CREATE_STREAM = 'CREATE_STREAM';
 export const DELETE_MEMBERSHIP = 'DELETE_MEMBERSHIP';
 export const DELETE_DEVICE = 'DELETE_DEVICE';
 export const LOGIN = 'LOGIN';
+export const RESET = 'RESET';

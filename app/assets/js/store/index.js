@@ -21,7 +21,7 @@ import {
   SAVE_PREVIOUS_TO,
   CLEAR_PREVIOUS_TO,
   LOGGED_IN,
-  RESET
+  CLEAR_STATE
 } from './mutation-types';
 import {
   LOAD_POLICIES,
@@ -31,7 +31,8 @@ import {
   CREATE_STREAM,
   DELETE_MEMBERSHIP,
   DELETE_DEVICE,
-  LOGIN
+  LOGIN,
+  RESET
 } from './action-types';
 
 Vue.use(Vuex);
@@ -176,7 +177,7 @@ const store = new Vuex.Store({
       state.loggedIn = true;
     },
 
-    [RESET](state) {
+    [CLEAR_STATE](state) {
       localStorage.removeItem(state.pin);
       localStorage.removeItem('pin');
       Object.assign(state, defaultState());
@@ -243,7 +244,8 @@ const store = new Vuex.Store({
     [DELETE_DEVICE]({ commit }, payload) {
       commit(REMOVE_DEVICE, payload);
     },
-    [LOGIN]() { }
+    [LOGIN]() { },
+    [RESET]() { }
   },
   getters: {
     policyOptions(state) {

@@ -18,11 +18,11 @@
 </template>
 
 <script>
-import { RESET } from "../store/mutation-types";
+import { RESET } from "../store/action-types";
 export default {
   methods: {
     onConfirm() {
-      this.$store.commit(RESET);
+      this.$store.dispatch(RESET);
       this.$router.replace({
         name: "authenticate"
       });

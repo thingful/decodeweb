@@ -8,7 +8,8 @@ import {
   CREATE_STREAM,
   DELETE_MEMBERSHIP,
   DELETE_DEVICE,
-  LOGIN
+  LOGIN,
+  RESET
 } from "./action-types";
 import {
   POLICIES_LOADED,
@@ -16,7 +17,8 @@ import {
   SAVE_ERROR,
   SAVE_STREAM,
   REMOVE_MEMBERSHIP,
-  LOGGED_IN
+  LOGGED_IN,
+  CLEAR_STATE
 } from "./mutation-types";
 
 const timeout = 10000;
@@ -81,7 +83,9 @@ export default function createChannelPlugin(socket) {
 
         case REQUEST_CREDENTIAL:
           channel.push('request_credential', action.payload, timeout)
-            .receive("ok", (payload) => store.dispatch(CREATE_BLINDPROOF, payload))
+            .receive("ok", (payload) => {
+              return store.dispatch(CREATE_BLINDPROOF, payload);
+            })
             .receive("error", (payload) => {
               console.log(payload);
               store.commit(SAVE_ERROR, 'request credential error');
@@ -159,6 +163,27 @@ export default function createChannelPlugin(socket) {
             .receive("timeout", () => {
               store.commit(SAVE_ERROR, 'Unable to reach server');
             });
+
+          break;
+
+        case RESET:
+          // send message to delete all devices
+          let devices = store.state.configuration.devices;
+
+          _.forIn(devices, (device) => {
+            _.forIn(device.memberships, (membership) => {
+              let msg = {
+                device_token: device.deviceToken,
+                authorizable_attribute_id: membership.authorizable_attribute_id,
+                stream: membership.stream
+              };
+
+              channel.push('delete_stream', msg);
+            });
+          })
+
+          // tell store to commit to CLEAR_STATE
+          store.commit(CLEAR_STATE);
 
           break;
 
