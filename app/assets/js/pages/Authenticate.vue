@@ -37,6 +37,7 @@
 <script>
 import { AUTHENTICATE, CLEAR_PREVIOUS_TO } from "../store/mutation-types";
 import zenroom from "../zenroom";
+import { LOAD_POLICIES } from "../store/action-types";
 
 export default {
   data() {
@@ -52,6 +53,7 @@ export default {
   methods: {
     onSubmit(evt) {
       evt.preventDefault();
+      this.$store.dispatch(LOAD_POLICIES);
       this.$store.commit(AUTHENTICATE, { pin: this.pin });
 
       if (this.$store.state.previousTo) {

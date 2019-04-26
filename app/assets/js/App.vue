@@ -28,7 +28,6 @@ h2 {
         <b-navbar-nav v-if="pin">
           <b-nav-item :to="{name: 'home'}">{{ $t('message.home') }}</b-nav-item>
           <b-nav-item :to="{name: 'devices'}">{{ $t('message.manageDevices') }}</b-nav-item>
-          <b-nav-item :to="{name: 'reset'}">{{ $t('message.reset') }}</b-nav-item>
           <b-nav-item @click="logout">Logout</b-nav-item>
         </b-navbar-nav>
 

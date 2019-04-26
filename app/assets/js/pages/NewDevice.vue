@@ -75,7 +75,7 @@
         <div class="col">
           <b-button variant="outline-secondary" :to="{ name: 'devices' }">{{ $t('message.back') }}</b-button>
         </div>
-        <div class="col">
+        <div class="col-9">
           <b-button
             type="button"
             variant="primary"
@@ -162,7 +162,13 @@ export default {
         exposure: this.form.exposure,
         memberships: {}
       });
-      this.$router.replace({ name: "devices" });
+
+      this.$router.replace({
+        name: "choose",
+        params: {
+          id: this.form.deviceToken
+        }
+      });
     },
     onReset(evt) {
       evt.preventDefault();
