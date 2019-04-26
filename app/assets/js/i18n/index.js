@@ -63,6 +63,22 @@ const messages = {
         missingLoginParams: 'Missing required login parameters, please return to the dashboard and try logging in again.'
       }
     }
+  },
+  es: {
+    message: {
+      pinValidation: 'Su PIN debe tener al menos 4 dígitos',
+      errors: {
+        timeout: 'Tiempo de espera agotado'
+      }
+    }
+  },
+  ca: {
+    message: {
+      pinValidation: 'El vostre PIN ha de tenir com a mínim 4 dígits',
+      errors: {
+        timeout: 'La sol·licitud ha caducat'
+      }
+    }
   }
 };
 
