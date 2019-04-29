@@ -27,7 +27,12 @@
             <b-form-invalid-feedback :state="validation">{{ $t("message.pinValidation") }}</b-form-invalid-feedback>
           </b-form-group>
 
-          <b-button block type="submit" variant="primary">{{ $t("message.signIn") }}</b-button>
+          <b-button
+            block
+            type="submit"
+            variant="primary"
+            :disabled="!validation"
+          >{{ $t("message.signIn") }}</b-button>
         </b-form>
       </div>
     </div>

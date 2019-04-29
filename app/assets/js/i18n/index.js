@@ -10,7 +10,7 @@ const messages = {
       pinValidation: 'Your PIN must be at least 4 digits long',
       signIn: 'Sign In',
       logout: 'Logout',
-      enterPin: 'Enter your PIN',
+      enterPin: 'Please enter a PIN of at least 4 digits that will allow you to retrieve your device data stored within the browser. Please take a note of your PIN somewhere as you will not be able to change or retrieve it later.',
       pin: 'PIN',
       home: 'Home',
       homeText: 'This is your personal data stored in the DECODE app',
