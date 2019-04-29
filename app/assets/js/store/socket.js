@@ -88,7 +88,7 @@ export default function createChannelPlugin(socket) {
             })
             .receive("error", (payload) => {
               console.log(payload);
-              store.commit(SAVE_ERROR, 'request credential error');
+              store.commit(SAVE_ERROR, payload.msg);
             })
             .receive('timeout', () => {
               store.commit(SAVE_ERROR, 'Unable to reach remote server');

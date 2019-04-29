@@ -84,7 +84,7 @@ defmodule Decode.Credentials.Poison do
         {:ok, body}
 
       {:ok, %HTTPoison.Response{body: %{"detail" => msg}}} ->
-        {:error, msg}
+        {:error, %{msg: msg}}
 
       {:error, error} ->
         {:error, error}
