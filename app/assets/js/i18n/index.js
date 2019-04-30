@@ -55,7 +55,7 @@ const messages = {
       dashboardLogin: 'BCNNow requires a credential to log you in',
       shareCredential: 'Please choose a credential to share with the dashboard',
       selectCredential: 'Please select a credential',
-      successfulLogin: 'Successfully logged in - please switch back to the BCNNow page',
+      successfulLogin: 'Successfully logged in - please switch back to the BCNNow page if logging in from a computer',
       resetText: 'Resetting your application means all device and community membership configuration details will be deleted and will not be able to be recovered. You should only do this if instructed to by a workshop leader.',
       resetConfirmationText: 'Are you sure you want to reset your app? This will remove all device configuration and community membership details.',
       errors: {
