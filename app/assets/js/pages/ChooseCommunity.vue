@@ -140,6 +140,9 @@ export default {
         name: "device",
         params: { id: this.id }
       });
+    },
+    error: function(newError, oldError) {
+      this.loading = false;
     }
   }
 };
