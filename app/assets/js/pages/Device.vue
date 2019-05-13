@@ -31,7 +31,7 @@
           block
           variant="primary"
           :to="{ name: 'choose', params: { id: device.deviceToken }}"
-        >{{ $t('message.chooseCommunity') }}</b-button>
+        >{{ $t('message.choose') }}</b-button>
       </div>
     </div>
 

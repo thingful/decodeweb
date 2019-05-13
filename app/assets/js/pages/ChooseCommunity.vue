@@ -1,12 +1,20 @@
+<style scoped>
+h2 {
+  text-align: center;
+}
+</style>
+
 <template>
   <div>
     <h1>{{ $t('message.chooseCommunity')}}</h1>
 
-    <h2>{{ $t('message.device') }}: {{ device.deviceToken }}</h2>
+    <h2>{{ device.label }}</h2>
 
     <div class="form-row">
       <div class="col">
-        <small>{{ $t('message.choosePolicy') }}</small>
+        <b-alert show variant="info">
+          <small>{{ $t('message.choosePolicy') }}</small>
+        </b-alert>
       </div>
     </div>
     <div class="form-row">

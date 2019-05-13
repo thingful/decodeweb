@@ -32,10 +32,12 @@ const messages = {
       device: 'Device',
       reload: 'Reload',
       loadPolicies: 'Load Available Policies',
-      choosePolicy: 'Please choose an available community policy for your device',
+      choosePolicy: 'Please choose an available community for your device. Joining a community means your data will be shared in accordance of the rules defined in the community policy.',
       memberships: 'Community Memberships',
       findCommunity: 'Find Community',
       chooseCommunity: 'Choose Community',
+      communityInfo: ' A community means a set of rules defining what sensors to share and any operations that should be applied to these sensors. By choosing to join a community you are agreeing to share your data with other members after the communities processing rules have been applied.',
+      choose: 'Choose',
       sensors: 'Sensors',
       shareAllSensors: 'Share all device sensors',
       movingAverage: 'Moving Average',
@@ -43,8 +45,10 @@ const messages = {
       share: 'Share',
       joinCommunity: 'Join Community',
       credentialSharing: 'You are going to ask for a credential from an external service. In order to do so, you need to provide the following information:',
+      credentialInfo: 'Please note to obtain a credential you must have already supplied your email address to the community organiser, and the token will be supplied to you by the community organiser',
       deviceMembership: 'Manage Membership',
       deleteMembership: 'Delete Membership',
+      delete: 'Delete',
       confirmation: 'Confirmation',
       confirmationText: 'Are you sure you want to delete your membership of this community? You will no longer be able to access the community dashboard.',
       deleteDevice: 'Delete Device',
@@ -63,7 +67,8 @@ const messages = {
       errors: {
         timeout: 'Request timed out',
         missingLoginParams: 'Missing required login parameters, please return to the dashboard and try logging in again.'
-      }
+      },
+      bcnnow: 'Open BarcelonaNow'
     }
   },
   es: {

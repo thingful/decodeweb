@@ -9,7 +9,11 @@
   <div>
     <h1>{{ policy.label }}</h1>
 
-    <h2>{{ $t('message.device') }}: {{ device.deviceToken }}</h2>
+    <h2>{{ device.label }}</h2>
+
+    <p>
+      <a href="http://bcnnow.decodeproject.eu">{{ $t('message.bcnnow') }}</a>
+    </p>
 
     <div class="row">
       <div class="col">
@@ -20,12 +24,7 @@
         >{{ $t('message.back') }}</b-button>
       </div>
       <div class="col">
-        <b-button
-          block
-          type="button"
-          variant="danger"
-          v-b-modal.confirm
-        >{{ $t("message.deleteMembership") }}</b-button>
+        <b-button block type="button" variant="danger" v-b-modal.confirm>{{ $t("message.delete") }}</b-button>
       </div>
     </div>
 

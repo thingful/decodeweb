@@ -23,6 +23,10 @@ h2 {
         <b-form-input required :id="info.id" v-model="info.value" :type="info.type"></b-form-input>
       </b-form-group>
 
+      <b-alert show variant="info">
+        <small>{{ $t('message.credentialInfo') }}</small>
+      </b-alert>
+
       <b-button block type="submit" variant="danger" :disabled="loading">
         <b-spinner small v-if="loading"></b-spinner>
         {{ $t("message.joinCommunity") }}
