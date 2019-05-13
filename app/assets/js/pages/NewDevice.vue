@@ -138,7 +138,7 @@ export default {
     };
   },
   created() {
-    this.form.label = this.$route.query.label || "";
+    this.form.label = this.$route.query.device_name || "";
     this.form.deviceToken = this.$route.query.device_token || "";
     this.form.longitude = this.$route.query.lng || "";
     this.form.latitude = this.$route.query.lat || "";

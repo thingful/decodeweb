@@ -16,7 +16,7 @@ const messages = {
       homeText: 'This is your personal data stored in the DECODE app',
       manageDevices: 'Manage Devices',
       addDevice: 'Add Device',
-      deviceLabel: 'Label',
+      deviceLabel: 'Name',
       enterDeviceLabel: 'e.g. My Sensor',
       deviceToken: 'Code',
       enterDeviceToken: 'e.g. ef0012',
