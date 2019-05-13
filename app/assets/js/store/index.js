@@ -214,6 +214,7 @@ const store = new Vuex.Store({
 
       let createStreamMsg = {
         device_token: payload.device_token,
+        device_label: device.label,
         community_id: membership.policy.community_id,
         recipient_public_key: membership.policy.public_key,
         location: {

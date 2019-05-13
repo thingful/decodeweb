@@ -62,6 +62,7 @@ export default function createChannelPlugin(socket) {
             // build create stream message
             let createStreamMsg = {
               device_token: action.payload.device_token,
+              device_label: device.label,
               community_id: existingMembership.policy.community_id,
               recipient_public_key: existingMembership.policy.public_key,
               location: {

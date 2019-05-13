@@ -6,6 +6,24 @@
       <div class="form-row">
         <div class="col">
           <b-form-group
+            id="device-label-group"
+            :label="$t('message.deviceLabel') + ':'"
+            label-for="device-label"
+          >
+            <b-form-input
+              id="device-label"
+              v-model="form.label"
+              type="text"
+              required
+              :placeholder="$t('message.enterDeviceLabel')"
+              :state="validLabel"
+            ></b-form-input>
+          </b-form-group>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col">
+          <b-form-group
             id="device-token-group"
             :label="$t('message.deviceToken') + ':'"
             label-for="device-token"
@@ -16,7 +34,7 @@
               type="text"
               required
               :placeholder="$t('message.enterDeviceToken')"
-              :state="tokenValidation"
+              :state="validToken"
             ></b-form-input>
           </b-form-group>
         </div>
@@ -35,7 +53,7 @@
               step="any"
               required
               :placeholder="$t('message.enterLongitude')"
-              :state="longitudeValidation"
+              :state="validLongitude"
             ></b-form-input>
           </b-form-group>
         </div>
@@ -53,7 +71,7 @@
               step="any"
               required
               :placeholder="$t('message.enterLatitude')"
-              :state="latitudeValidation"
+              :state="validLatitude"
             ></b-form-input>
           </b-form-group>
         </div>
@@ -65,7 +83,7 @@
               v-model="form.exposure"
               :options="exposureOptions"
               name="exposure"
-              :state="exposureValidation"
+              :state="validExposure"
             ></b-form-radio-group>
           </b-form-group>
         </div>
@@ -106,6 +124,7 @@ export default {
   data() {
     return {
       form: {
+        label: "",
         deviceToken: "",
         longitude: "",
         latitude: "",
@@ -119,36 +138,41 @@ export default {
     };
   },
   created() {
+    this.form.label = this.$route.query.label || "";
     this.form.deviceToken = this.$route.query.device_token || "";
     this.form.longitude = this.$route.query.lng || "";
     this.form.latitude = this.$route.query.lat || "";
     this.form.exposure = (this.$route.query.exposure || "").toUpperCase();
   },
   computed: {
-    tokenValidation() {
+    validLabel() {
+      return this.form.label.length > 0;
+    },
+    validToken() {
       return this.form.deviceToken.length > 0;
     },
-    longitudeValidation() {
+    validLongitude() {
       return (
         this.form.longitude.length > 0 &&
         this.form.longitude.match(/^\d+\.?(\d*)?$/) !== null
       );
     },
-    latitudeValidation() {
+    validLatitude() {
       return (
         this.form.latitude.length > 0 &&
         this.form.latitude.match(/^\d+\.?(\d*)?$/) !== null
       );
     },
-    exposureValidation() {
+    validExposure() {
       return this.form.exposure !== "";
     },
     allValid() {
       return !(
-        this.tokenValidation &&
-        this.longitudeValidation &&
-        this.latitudeValidation &&
-        this.exposureValidation
+        this.validLabel &&
+        this.validToken &&
+        this.validLongitude &&
+        this.validLatitude &&
+        this.validExposure
       );
     }
   },
@@ -156,6 +180,7 @@ export default {
     onConfirm(evt) {
       evt.preventDefault();
       this.$store.commit(ADD_DEVICE, {
+        label: this.form.label,
         deviceToken: this.form.deviceToken,
         longitude: this.form.longitude,
         latitude: this.form.latitude,
@@ -172,6 +197,7 @@ export default {
     },
     onReset(evt) {
       evt.preventDefault();
+      this.form.label = "";
       this.form.deviceToken = "";
       this.form.longitude = "";
       this.form.latitude = "";

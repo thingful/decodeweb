@@ -3,7 +3,7 @@
 
 <template>
   <div>
-    <h1>{{ $t('message.device')}}: {{ device.deviceToken }}</h1>
+    <h1>{{ device.label }}</h1>
 
     <h2>{{ $t('message.memberships') }}</h2>
 

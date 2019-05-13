@@ -1,10 +1,4 @@
-import Vue from 'vue';
-import VueI18n from 'vue-i18n';
-import _ from 'lodash';
-
-Vue.use(VueI18n);
-
-const messages = {
+module.exports = {
   en: {
     message: {
       pinValidation: 'Your PIN must be at least 4 digits long',
@@ -16,9 +10,7 @@ const messages = {
       homeText: 'This is your personal data stored in the DECODE app',
       manageDevices: 'Manage Devices',
       addDevice: 'Add Device',
-      deviceLabel: 'Label',
-      enterDeviceLabel: 'e.g. My Sensor',
-      deviceToken: 'Code',
+      deviceToken: 'Device Token',
       enterDeviceToken: 'e.g. ef0012',
       token: 'Token',
       longitude: 'Longitude',
@@ -57,7 +49,7 @@ const messages = {
       dashboardLogin: 'BCNNow requires a credential to log you in',
       shareCredential: 'Please choose a credential to share with the dashboard',
       selectCredential: 'Please select a credential',
-      successfulLogin: 'Successfully logged in - please switch back to the BCNNow page if logging in from a computer',
+      successfulLogin: 'Successfully logged in - please switch back to the BCNNow page',
       resetText: 'Resetting your application means all device and community membership configuration details will be deleted and will not be able to be recovered. You should only do this if instructed to by a workshop leader.',
       resetConfirmationText: 'Are you sure you want to reset your app? This will remove all device configuration and community membership details.',
       errors: {
@@ -181,19 +173,3 @@ const messages = {
     }
   }
 };
-
-const choosableLanguages = _.intersection(Object.keys(messages), navigator.languages);
-var locale;
-
-if (choosableLanguages.length === 0) {
-  locale = "en";
-} else {
-  locale = choosableLanguages[0];
-}
-
-const i18n = new VueI18n({
-  locale: locale,
-  messages,
-});
-
-export default i18n;
