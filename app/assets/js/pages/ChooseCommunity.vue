@@ -142,6 +142,10 @@ export default {
       });
     },
     error: function(newError, oldError) {
+      console.log("*************");
+      console.log(oldError);
+      console.log(newError);
+      console.log("*************");
       this.loading = false;
     }
   }
