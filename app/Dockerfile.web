@@ -34,6 +34,9 @@ FROM alpine:3.8
 
 LABEL maintainer="Sam Mulube <sam@thingful.net>"
 
+COPY --from=builder /app/target /app
+COPY --from=builder /app/.version /app/
+
 RUN apk add --update --no-cache \
   ncurses-libs \
   bash \
@@ -43,13 +46,9 @@ RUN apk add --update --no-cache \
   curl \
   openssh \
   bind-tools \
-  && update-ca-certificates
-
-COPY --from=builder /app/target /app
-COPY --from=builder /app/.version /app/
-
-RUN adduser -D decode \
-  && chown -R decode:decode /app
+  && update-ca-certificates && \
+  adduser -D decode && \
+  chown -R decode:decode /app
 
 USER decode
 
