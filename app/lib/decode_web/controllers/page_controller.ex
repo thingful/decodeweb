@@ -4,4 +4,8 @@ defmodule DecodeWeb.PageController do
   def index(conn, _params) do
     render(conn, "index.html")
   end
+
+  def pulse(conn, _params) do
+    text(conn, "ok")
+  end
 end
