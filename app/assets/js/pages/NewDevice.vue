@@ -104,7 +104,7 @@
             variant="primary"
             :disabled="allValid"
             v-b-modal.confirm
-          >{{ $t("message.addDevice") }}</b-button>
+          >{{ $t("message.confirm") }}</b-button>
         </div>
       </div>
     </b-form>
