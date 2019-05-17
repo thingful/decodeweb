@@ -2,7 +2,7 @@
   <div>
     <h1>{{ $t('message.addDevice')}}</h1>
 
-    <b-form @reset="onReset" v-if="show">
+    <b-form v-if="show">
       <div class="form-row">
         <div class="col">
           <b-form-group
@@ -91,16 +91,20 @@
 
       <div class="form-row">
         <div class="col">
-          <b-button variant="outline-secondary" :to="{ name: 'devices' }">{{ $t('message.back') }}</b-button>
-        </div>
-        <div class="col-9">
           <b-button
+            block
+            variant="outline-secondary"
+            :to="{ name: 'devices' }"
+          >{{ $t('message.back') }}</b-button>
+        </div>
+        <div class="col">
+          <b-button
+            block
             type="button"
             variant="primary"
             :disabled="allValid"
             v-b-modal.confirm
           >{{ $t("message.addDevice") }}</b-button>
-          <b-button type="reset" variant="danger">{{ $t("message.reset") }}</b-button>
         </div>
       </div>
     </b-form>
@@ -193,18 +197,6 @@ export default {
         params: {
           id: this.form.deviceToken
         }
-      });
-    },
-    onReset(evt) {
-      evt.preventDefault();
-      this.form.label = "";
-      this.form.deviceToken = "";
-      this.form.longitude = "";
-      this.form.latitude = "";
-      this.form.exposure = "";
-      this.show = false;
-      this.$nextTick(() => {
-        this.show = true;
       });
     }
   }
