@@ -44,7 +44,7 @@ h2 {
 
     <div class="row justify-content-center">
       <div class="col text-center">
-        <img src="images/logo.svg" class="m-2 logo">
+        <img src="images/logo.svg" alt="DECODE Logo" class="m-2 logo">
       </div>
     </div>
 
