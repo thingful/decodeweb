@@ -2,6 +2,10 @@
 .back-button {
   top: 4.2rem;
 }
+
+p {
+  text-align: center;
+}
 </style>
 
 
