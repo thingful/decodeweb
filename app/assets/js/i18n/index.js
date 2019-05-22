@@ -32,7 +32,7 @@ const messages = {
       device: 'Device',
       reload: 'Reload',
       loadPolicies: 'Load Available Policies',
-      choosePolicy: 'Please choose an available community for your device. Joining a community means your data will be shared in accordance of the rules defined in the community policy.',
+      choosePolicy: 'Please choose an available community for your device. Joining a community means your data will be shared in accordance with the rules defined in the community policy, and you will have the right to see others data who have also joined this community.',
       memberships: 'Community Memberships',
       findCommunity: 'Find Community',
       chooseCommunity: 'Choose Community',
@@ -69,7 +69,10 @@ const messages = {
         timeout: 'Request timed out',
         missingLoginParams: 'Missing required login parameters, please return to the dashboard and try logging in again.'
       },
-      bcnnow: 'Open BarcelonaNow'
+      bcnnow: 'To view the dashboard, plase go to http://bcnnow.decodeproject.eu',
+      registrationComplete: 'Registration Complete',
+      registrationText: 'Your device is now fully registered with Decode. Now, its time to finish the Smart Citizen Kit registration so please return to your computer to complete the process.',
+      devicePageText: 'Please see a list of the current community memberships for your device below. If you\'d like to add your device to another community please click the "Choose" button below'
     }
   },
   es: {
