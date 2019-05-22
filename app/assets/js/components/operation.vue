@@ -2,7 +2,8 @@
   <b-list-group-item>
     {{ sensor.name }} ({{ sensor.unit }})
     <br>
-    {{ sensor.actionLabel }} {{ sensor.modifier }}
+    {{ sensor.actionLabel }}
+    <small>{{ sensor.modifier }}</small>
   </b-list-group-item>
 </template>
 
@@ -29,7 +30,7 @@ export default {
           break;
         case "BIN":
           details.actionLabel = this.$t("message.bin");
-          details.modifier = `(${this.bins.toString()})`;
+          details.modifier = `(${this.binInfo(this.bins)})`;
           break;
         default:
           details.actionLabel = this.$t("message.share");
@@ -41,6 +42,15 @@ export default {
   methods: {
     sensorDetail: function(id) {
       return sensorDetails(id);
+    },
+    binInfo: function(bins) {
+      let info = `<${bins[0]}`;
+      for (var i = 0; i < bins.length - 1; i++) {
+        info += `, ${bins[i]}-${bins[i + 1]}`;
+      }
+      info += `, >${bins[bins.length - 1]}`;
+
+      return info;
     }
   }
 };
