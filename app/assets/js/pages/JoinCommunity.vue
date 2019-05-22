@@ -95,7 +95,8 @@ export default {
     membership: function(newStream, oldStream) {
       this.$router.replace({
         name: "device",
-        params: { id: this.id }
+        params: { id: this.id },
+        query: { new_device: true }
       });
     }
   },

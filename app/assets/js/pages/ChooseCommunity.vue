@@ -138,7 +138,8 @@ export default {
     membership: function(newMembership, oldMembership) {
       this.$router.replace({
         name: "device",
-        params: { id: this.id }
+        params: { id: this.id },
+        query: { new_device: true }
       });
     },
     error: function(newError, oldError) {
