@@ -158,13 +158,13 @@ export default {
     validLongitude() {
       return (
         this.form.longitude.length > 0 &&
-        this.form.longitude.match(/^\d+\.?(\d*)?$/) !== null
+        this.form.longitude.match(/^-?\d+\.?(\d*)?$/) !== null
       );
     },
     validLatitude() {
       return (
         this.form.latitude.length > 0 &&
-        this.form.latitude.match(/^\d+\.?(\d*)?$/) !== null
+        this.form.latitude.match(/^-?\d+\.?(\d*)?$/) !== null
       );
     },
     validExposure() {
