@@ -28,15 +28,15 @@ h2 {
         <b-navbar-nav v-if="pin">
           <b-nav-item :to="{name: 'home'}">{{ $t('message.home') }}</b-nav-item>
           <b-nav-item :to="{name: 'devices'}">{{ $t('message.manageDevices') }}</b-nav-item>
-          <b-nav-item @click="logout">Logout</b-nav-item>
+          <b-nav-item @click="logout">{{ $t('message.logout') }}</b-nav-item>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
-          <b-nav-item-dropdown text="Lang" right>
-            <b-dropdown-item @click="onLang" data-value="en">EN</b-dropdown-item>
-            <b-dropdown-item @click="onLang" data-value="es">ES</b-dropdown-item>
-            <b-dropdown-item @click="onLang" data-value="ca">CA</b-dropdown-item>
+          <b-nav-item-dropdown :text="$t('message.chooseLanguage')" right>
+            <b-dropdown-item @click="onLang" data-value="ca">Català</b-dropdown-item>
+            <b-dropdown-item @click="onLang" data-value="es">Castellano</b-dropdown-item>
+            <b-dropdown-item @click="onLang" data-value="en">English</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>

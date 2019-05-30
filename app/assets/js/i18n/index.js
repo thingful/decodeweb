@@ -72,7 +72,8 @@ const messages = {
       bcnnow: 'To view the dashboard, please go to {url}',
       registrationComplete: 'Registration Complete',
       registrationText: 'Your device is now fully registered with Decode. Now, its time to finish the Smart Citizen Kit registration so please return to your computer to complete the process.',
-      devicePageText: 'Please see a list of the current community memberships for your device below. If you\'d like to add your device to another community please click the "Choose" button below'
+      devicePageText: 'Please see a list of the current community memberships for your device below. If you\'d like to add your device to another community please click the "Choose" button below',
+      chooseLanguage: 'Choose Language'
     }
   },
   ca: {
@@ -142,7 +143,8 @@ const messages = {
       bcnnow: 'Per a visualitzar els gràfics, si us plau accedeixi a {url}',
       registrationComplete: 'Registre completat',
       registrationText: 'El seu dispositiu ja està correctament registrat en Decode. Ara, és el moment d\'acabar el registre del Kit Smart Citizen, així que si us plau torni al seu ordinador per a completar el procés.',
-      devicePageText: 'Consulti a continuació una llista dels membres actuals de la comunitat per al seu dispositiu. Si desitja afegir el seu dispositiu a una altra comunitat, faci clic en el botó "Triar" que apareix a continuació.'
+      devicePageText: 'Consulti a continuació una llista dels membres actuals de la comunitat per al seu dispositiu. Si desitja afegir el seu dispositiu a una altra comunitat, faci clic en el botó "Triar" que apareix a continuació.',
+      chooseLanguage: 'Canviar idioma'
     }
   },
   es: {
@@ -212,7 +214,8 @@ const messages = {
       bcnnow: 'Para visualizar los gráficos, por favor acceda a {url}',
       registrationComplete: 'Registro completado',
       registrationText: 'Su dispositivo ya está correctamente registrado en Decode. Ahora, es el momento de terminar el registro del Kit Smart Citizen, así que por favor regrese a su ordenador para completar el proceso.',
-      devicePageText: 'Consulte a continuación una lista de los miembros actuales de la comunidad para su dispositivo. Si desea añadir su dispositivo a otra comunidad, haga clic en el botón "Elegir" que aparece a continuación.'
+      devicePageText: 'Consulte a continuación una lista de los miembros actuales de la comunidad para su dispositivo. Si desea añadir su dispositivo a otra comunidad, haga clic en el botón "Elegir" que aparece a continuación.',
+      chooseLanguage: 'Cambiar idioma'
     }
   }
 };

@@ -79,12 +79,10 @@
       <div class="form-row">
         <div class="col">
           <b-form-group :label="$t('message.exposure') + ':'">
-            <b-form-radio-group
-              v-model="form.exposure"
-              :options="exposureOptions"
-              name="exposure"
-              :state="validExposure"
-            ></b-form-radio-group>
+            <b-form-radio-group v-model="form.exposure" name="exposure" :state="validExposure">
+              <b-form-radio value="INDOOR">{{ $t('message.indoors') }}</b-form-radio>
+              <b-form-radio value="OUTDOOR">{{ $t('message.outdoors') }}</b-form-radio>
+            </b-form-radio-group>
           </b-form-group>
         </div>
       </div>
@@ -135,8 +133,8 @@ export default {
         exposure: ""
       },
       exposureOptions: [
-        { text: "Indoors", value: "INDOOR" },
-        { text: "Outdoors", value: "OUTDOOR" }
+        { text: this.$t("message.indoors"), value: "INDOOR" },
+        { text: this.$t("message.outdoors"), value: "OUTDOOR" }
       ],
       show: true
     };

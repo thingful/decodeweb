@@ -16,7 +16,7 @@ p {
     <h2>{{ device.label }}</h2>
 
     <p>
-      <a href="http://bcnnow.decodeproject.eu">{{ $t('message.bcnnow') }}</a>
+      <a :href="bcnnowUrl">{{ $t('message.bcnnow', { url: bcnnowUrl }) }}</a>
     </p>
 
     <div class="row">
@@ -57,7 +57,8 @@ export default {
   },
   data() {
     return {
-      selected: "true"
+      selected: "true",
+      bcnnowUrl: "http://bcnnow.decodeproject.eu/"
     };
   },
   computed: {
