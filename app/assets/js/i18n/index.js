@@ -66,21 +66,24 @@ const messages = {
       resetConfirmationText: 'Are you sure you want to reset your app? This will remove all device configuration and community membership details.',
       errors: {
         timeout: 'Request timed out',
-        missingLoginParams: 'Missing required login parameters, please return to BCNNow and try logging in again.'
+        missingLoginParams: 'Missing required login parameters, please return to BCNNow and try logging in again.',
+        wasmNotAvailable: 'In order to use the DECODE webapp your browser must be updated to a more recent version. For details on the required functionality please see {0}'
       },
-      bcnnow: 'To view the dashboard, please go to {url}',
+      bcnnow: 'To visualise your data, please go to {url}',
       registrationComplete: 'Registration Complete',
       registrationText: 'Your device is now fully registered with Decode. Now, its time to finish the Smart Citizen Kit registration so please return to your computer to complete the process.',
       devicePageText: 'Please see a list of the current community memberships for your device below. If you\'d like to add your device to another community please click the "Choose" button below',
-      chooseLanguage: 'Choose Language'
+      chooseLanguage: 'Choose Language',
+      cancel: 'Cancel',
+      ok: 'OK'
     }
   },
   ca: {
     message: {
       pinValidation: 'El seu PIN ha de ser d\'almenys 4 dígits',
-      signIn: 'Registrar-se',
+      signIn: 'Registra\'t',
       logout: 'Tancar sessió',
-      enterPin: 'Si us plau, introdueixi un PIN d\'almenys 4 dígits que li permeti protegir i recuperar les seves dades personals emmagatzemades en l\'aplicació. Si us plau, prengui nota de la seva PIN en algun lloc, ja que no podrà canviar-lo ni recuperar-lo més tard.',
+      enterPin: 'Si us plau, introdueixi un PIN d\'almenys 4 dígits que li permeti protegir i recuperar les seves dades personals emmagatzemades en l\'aplicació. Si us plau, prengui nota de la seva PIN, ja que no podrà canviar-lo ni recuperar-lo més tard.',
       pin: 'PIN',
       home: 'Pàgina principal',
       manageDevices: 'Gestionar dispositius',
@@ -94,14 +97,14 @@ const messages = {
       enterLongitude: 'p. ex. 2.15',
       latitude: 'Latitud',
       enterLatitude: 'p. ex. 41.39',
-      exposure: 'Situació',
+      exposure: 'Ubicació',
       indoors: 'Interior',
       outdoors: 'Exterior',
       reset: 'Reiniciar',
       device: 'Dispositiu',
       reload: 'Recarregar',
       loadPolicies: 'Carregar polítiques disponibles',
-      choosePolicy: 'Si us plau, triï una comunitat disponible per al seu dispositiu. Unir-se a una comunitat significa que les seves dades seran compartides d\'acord amb les regles definides en la polítiques de la comunitat, i també significa que vostè té el dret de veure les dades d\'altres persones que també s\'han unit a aquesta comunitat.',
+      choosePolicy: 'Si us plau, triï una comunitat disponible per al seu dispositiu. Unir-se a una comunitat significa que les seves dades seran compartides d\'acord amb les regles definides en les polítiques de la comunitat, i també que vostè té el dret de veure les dades d\'altres persones que també s\'han unit a aquesta comunitat.',
       memberships: 'Membres de la Comunitat',
       findCommunity: 'Trobar Comunitat',
       chooseCommunity: 'Triar Comunitat',
@@ -138,19 +141,21 @@ const messages = {
         timeout: 'Temps esgotat per a la sol·licitud',
         missingLoginParams: 'Falten els paràmetres d\'inici de sessió necessaris, si us plau torni a BCNNow i intenti iniciar sessió de nou.'
       },
-      bcnnow: 'Per a visualitzar els gràfics, si us plau accedeixi a {url}',
+      bcnnow: 'Per a visualitzar les dades, si us plau accedeixi a {url}',
       registrationComplete: 'Registre completat',
       registrationText: 'El seu dispositiu ja està correctament registrat en Decode. Ara, és el moment d\'acabar el registre del Kit Smart Citizen, així que si us plau torni al seu ordinador per a completar el procés.',
       devicePageText: 'Consulti a continuació una llista dels membres actuals de la comunitat per al seu dispositiu. Si desitja afegir el seu dispositiu a una altra comunitat, faci clic en el botó "Triar" que apareix a continuació.',
-      chooseLanguage: 'Canviar idioma'
+      chooseLanguage: 'Canviar idioma',
+      cancel: 'Cancel·lar',
+      ok: 'OK'
     }
   },
   es: {
     message: {
       pinValidation: 'Su PIN tiene que ser de al menos 4 dígitos ',
-      signIn: 'Registrarse',
+      signIn: 'Regístrate',
       logout: 'Cerrar sesión',
-      enterPin: 'Por favor, introduzca un PIN de al menos 4 dígitos que le permita proteger y recuperar sus datos personales almacenados en la aplicación. Por favor, tome nota de su PIN en algún lugar, ya que no podrá cambiarlo ni recuperarlo más tarde.',
+      enterPin: 'Por favor, introduzca un PIN de al menos 4 dígitos que le permita proteger y recuperar sus datos personales almacenados en la aplicación. Por favor, tome nota de su PIN, ya que no podrá cambiarlo ni recuperarlo más tarde.',
       pin: 'PIN',
       home: 'Página principal',
       manageDevices: 'Gestionar dispositivos',
@@ -164,14 +169,14 @@ const messages = {
       enterLongitude: 'p. ej. 2.15',
       latitude: 'Latitud',
       enterLatitude: 'p. ej. 41.39',
-      exposure: 'Situación',
+      exposure: 'Ubicación',
       indoors: 'Interior',
       outdoors: 'Exterior',
       reset: 'Reiniciar',
       device: 'Dispositivo',
       reload: 'Recargar',
       loadPolicies: 'Cargar políticas disponibles',
-      choosePolicy: 'Por favor, elija una comunidad disponible para su dispositivo. Unirse a una comunidad significa que sus datos serán compartidos de acuerdo con las reglas definidas en la políticas de la comunidad, y también significa que usted tiene el derecho de ver los datos de otras personas que también se han unido a esta comunidad.',
+      choosePolicy: 'Por favor, elija una comunidad disponible para su dispositivo. Unirse a una comunidad significa que sus datos serán compartidos de acuerdo con las reglas definidas en las políticas de la comunidad, y también que usted tiene el derecho de ver los datos de otras personas que también se han unido a esta comunidad.',
       memberships: 'Miembros de la Comunidad',
       findCommunity: 'Encontrar Comunidad',
       chooseCommunity: 'Elegir Comunidad',
@@ -208,11 +213,13 @@ const messages = {
         timeout: 'Tiempo agotado para la solicitud',
         missingLoginParams: 'Faltan los parámetros de inicio de sesión necesarios, por favor vuelva a BCNNow e intente iniciar sesión de nuevo.'
       },
-      bcnnow: 'Para visualizar los gráficos, por favor acceda a {url}',
+      bcnnow: 'Para visualizar los datos, por favor acceda a {url}',
       registrationComplete: 'Registro completado',
       registrationText: 'Su dispositivo ya está correctamente registrado en Decode. Ahora, es el momento de terminar el registro del Kit Smart Citizen, así que por favor regrese a su ordenador para completar el proceso.',
       devicePageText: 'Consulte a continuación una lista de los miembros actuales de la comunidad para su dispositivo. Si desea añadir su dispositivo a otra comunidad, haga clic en el botón "Elegir" que aparece a continuación.',
-      chooseLanguage: 'Cambiar idioma'
+      chooseLanguage: 'Cambiar idioma',
+      cancel: 'Cancelar',
+      ok: 'OK'
     }
   }
 };
