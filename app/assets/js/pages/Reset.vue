@@ -11,6 +11,8 @@
       centered
       @ok="onConfirm"
       ok-variant="danger"
+      :ok-title="$t('message.ok')"
+      :cancel-title="$t('message.cancel')"
     >
       <p>{{ $t('message.resetConfirmationText') }}</p>
     </b-modal>

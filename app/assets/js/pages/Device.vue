@@ -72,6 +72,7 @@
       centered
       ok-only
       v-model="newDevice"
+      :ok-title="$t('message.ok')"
     >
       <div class="onboarded-container">
         <img src="images/smartcitizen.jpg" class="onboarded-image">
