@@ -231,7 +231,7 @@ const messages = {
       errors: {
         timeout: 'Tiempo agotado para la solicitud',
         missingLoginParams: 'Faltan los parámetros de inicio de sesión necesarios, por favor vuelva a BCNNow e intente iniciar sesión de nuevo.',
-        wasmNotAvailable: 'Para poder utilizar la webapp de DECODE, su navegador debe estar actualizado a una versión reciente. Para más detalles sobre la funcionalidad requerida, consulte'
+        wasmNotAvailable: 'Para poder utilizar la webapp de DECODE, su navegador debe estar actualizado a una versión reciente. Para más detalles sobre la funcionalidad requerida, consulte {0}'
       },
       bcnnow: 'Para visualizar los datos, por favor acceda a {url}',
       registrationComplete: 'Registro completado',
