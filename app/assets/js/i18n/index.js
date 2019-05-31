@@ -148,7 +148,8 @@ const messages = {
       resetConfirmationText: 'Estàs segur que vols reiniciar la teva aplicació? Aquesta acció eliminarà tota la configuració del dispositiu i els detalls dels membres de la comunitat.',
       errors: {
         timeout: 'Temps esgotat per a la sol·licitud',
-        missingLoginParams: 'Falten els paràmetres d\'inici de sessió necessaris, si us plau torni a BCNNow i intenti iniciar sessió de nou.'
+        missingLoginParams: 'Falten els paràmetres d\'inici de sessió necessaris, si us plau torni a BCNNow i intenti iniciar sessió de nou.',
+        wasmNotAvailable: 'Per a poder utilitzar la webapp de DECODE, el seu navegador ha d\'estar actualitzat a una versió recent. Per a més detalls sobre la funcionalitat requerida, consulti {0}'
       },
       bcnnow: 'Per a visualitzar les dades, si us plau accedeixi a {url}',
       registrationComplete: 'Registre completat',
@@ -229,7 +230,8 @@ const messages = {
       resetConfirmationText: '¿Estás seguro de que quieres reiniciar tu aplicación? Esta acción eliminará toda la configuración del dispositivo y los detalles de los miembros de la comunidad.',
       errors: {
         timeout: 'Tiempo agotado para la solicitud',
-        missingLoginParams: 'Faltan los parámetros de inicio de sesión necesarios, por favor vuelva a BCNNow e intente iniciar sesión de nuevo.'
+        missingLoginParams: 'Faltan los parámetros de inicio de sesión necesarios, por favor vuelva a BCNNow e intente iniciar sesión de nuevo.',
+        wasmNotAvailable: 'Para poder utilizar la webapp de DECODE, su navegador debe estar actualizado a una versión reciente. Para más detalles sobre la funcionalidad requerida, consulte'
       },
       bcnnow: 'Para visualizar los datos, por favor acceda a {url}',
       registrationComplete: 'Registro completado',
