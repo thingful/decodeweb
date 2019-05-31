@@ -75,7 +75,16 @@ const messages = {
       devicePageText: 'Please see a list of the current community memberships for your device below. If you\'d like to add your device to another community please click the "Choose" button below',
       chooseLanguage: 'Choose Language',
       cancel: 'Cancel',
-      ok: 'OK'
+      ok: 'OK',
+      lightSensor: 'Light Sensor',
+      noiseSensor: 'Noise Sensor',
+      pressureSensor: 'Barometric Pressure Sensor',
+      batteryLevel: 'Battery Level',
+      temperatureSensor: 'Air Temperature Sensor',
+      pm25Sensor: 'PM 2.5 Sensor',
+      pm10Sensor: 'PM 10 Sensor',
+      pm1Sensor: 'PM 1 Sensor',
+      humiditySensor: 'Humidity Sensor'
     }
   },
   ca: {
@@ -147,7 +156,16 @@ const messages = {
       devicePageText: 'Consulti a continuació una llista dels membres actuals de la comunitat per al seu dispositiu. Si desitja afegir el seu dispositiu a una altra comunitat, faci clic en el botó "Triar" que apareix a continuació.',
       chooseLanguage: 'Canviar idioma',
       cancel: 'Cancel·lar',
-      ok: 'OK'
+      ok: 'OK',
+      lightSensor: 'Sensor de llum',
+      noiseSensor: 'Sensor de soroll',
+      pressureSensor: 'Sensor de pressió baromètrica',
+      batteryLevel: 'Nivell de bateria',
+      temperatureSensor: 'Sensor de temperatura',
+      pm25Sensor: 'Sensor 2.5 PM',
+      pm10Sensor: 'Sensor 10 PM',
+      pm1Sensor: 'Sensor 1 PM',
+      humiditySensor: 'Sensor d\'humitat'
     }
   },
   es: {
@@ -219,7 +237,16 @@ const messages = {
       devicePageText: 'Consulte a continuación una lista de los miembros actuales de la comunidad para su dispositivo. Si desea añadir su dispositivo a otra comunidad, haga clic en el botón "Elegir" que aparece a continuación.',
       chooseLanguage: 'Cambiar idioma',
       cancel: 'Cancelar',
-      ok: 'OK'
+      ok: 'OK',
+      lightSensor: 'Sensor de luz',
+      noiseSensor: 'Sensor de ruido',
+      pressureSensor: 'Sensor de presión barométrica',
+      batteryLevel: 'Nivel de bateria',
+      temperatureSensor: 'Sensor de temperatura',
+      pm25Sensor: 'Sensor 2.5 PM',
+      pm10Sensor: 'Sensor 10 PM',
+      pm1Sensor: 'Sensor 1 PM',
+      humiditySensor: 'Sensor de humedad'
     }
   }
 };

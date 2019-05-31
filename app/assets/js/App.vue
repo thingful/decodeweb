@@ -54,6 +54,7 @@ h2 {
 
 <script>
 import { LOGOUT } from "./store/mutation-types";
+import moment from "moment";
 
 export default {
   computed: {
@@ -68,6 +69,7 @@ export default {
     },
     onLang(evt) {
       this.$i18n.locale = evt.currentTarget.dataset.value;
+      moment.locale(evt.currentTarget.dataset.value);
     }
   }
 };

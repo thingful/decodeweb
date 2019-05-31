@@ -18,11 +18,11 @@ h2 {
       </div>
     </div>
     <div class="form-row">
-      <div class="col-9">
+      <div class="col-8">
         <b-form-select v-model="selected" :options="policyOptions">Please select an option</b-form-select>
       </div>
       <div class="col">
-        <b-button variant="outline-primary" block @click="onReload">{{ $t('message.reload') }}</b-button>
+        <b-button variant="outline-primary" @click="onReload">{{ $t('message.reload') }}</b-button>
       </div>
     </div>
 
