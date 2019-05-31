@@ -6,6 +6,11 @@
 
 <template>
   <div>
+    <b-alert :show="!wasmAvailable" variant="danger" class="mt-4">
+      <i18n path="message.errors.wasmNotAvailable">
+        <a :href="wasmUrl" target="_blank">{{ wasmUrl }}</a>
+      </i18n>
+    </b-alert>
     <div class="row align-items-end full-height">
       <div class="col">
         <b-form @submit="onSubmit">
@@ -31,7 +36,7 @@
             block
             type="submit"
             variant="primary"
-            :disabled="!validation"
+            :disabled="!validation || !wasmAvailable"
           >{{ $t("message.signIn") }}</b-button>
         </b-form>
       </div>
@@ -41,18 +46,35 @@
 
 <script>
 import { AUTHENTICATE, CLEAR_PREVIOUS_TO } from "../store/mutation-types";
-import zenroom from "../zenroom";
 import { LOAD_POLICIES } from "../store/action-types";
 
 export default {
   data() {
     return {
-      pin: ""
+      pin: "",
+      wasmUrl: "https://caniuse.com/#search=webassembly"
     };
   },
   computed: {
     validation() {
       return this.pin.length >= 4;
+    },
+    wasmAvailable() {
+      try {
+        if (
+          typeof WebAssembly === "object" &&
+          typeof WebAssembly.instantiate === "function"
+        ) {
+          const module = new WebAssembly.Module(
+            Uint8Array.of(0x0, 0x61, 0x73, 0x6d, 0x01, 0x00, 0x00, 0x00)
+          );
+          if (module instanceof WebAssembly.Module)
+            return (
+              new WebAssembly.Instance(module) instanceof WebAssembly.Instance
+            );
+        }
+      } catch (e) {}
+      return false;
     }
   },
   methods: {
