@@ -14,7 +14,8 @@ defmodule DecodeWeb.Endpoint do
     at: "/",
     from: :decode,
     gzip: false,
-    only: ~w(css fonts images js favicon.ico robots.txt index.wasm index.data index.js),
+    only:
+      ~w(css fonts images js favicon.ico favicon.png robots.txt index.wasm index.data index.js),
     content_types: %{"index.wasm" => "application/wasm"}
   )
 
