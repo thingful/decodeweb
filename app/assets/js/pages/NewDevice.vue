@@ -35,6 +35,8 @@
               required
               :placeholder="$t('message.enterDeviceToken')"
               :state="validToken"
+              autocapitalize="off"
+              autocorrect="off"
             ></b-form-input>
           </b-form-group>
         </div>

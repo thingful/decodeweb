@@ -20,7 +20,14 @@ h2 {
         :label="info.label"
         :id="info.id + '-fieldset'"
       >
-        <b-form-input required :id="info.id" v-model="info.value" :type="info.type"></b-form-input>
+        <b-form-input
+          required
+          :id="info.id"
+          v-model="info.value"
+          :type="info.type"
+          autocapitalize="off"
+          autocorrect="off"
+        ></b-form-input>
       </b-form-group>
 
       <b-alert show variant="info">
