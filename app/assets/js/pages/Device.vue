@@ -73,6 +73,7 @@
       ok-only
       v-model="newDevice"
       :ok-title="$t('message.ok')"
+      @ok="handleOk"
     >
       <div class="onboarded-container">
         <img src="images/smartcitizen.jpg" class="onboarded-image">
@@ -114,6 +115,14 @@ export default {
       });
       this.$router.replace({
         name: "devices"
+      });
+    },
+    handleOk(evt) {
+      evt.preventDefault();
+      this.newDevice = false;
+      this.$router.replace({
+        name: "device",
+        params: { id: this.id }
       });
     }
   }
